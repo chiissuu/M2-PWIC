@@ -3,29 +3,53 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Proyecto de la misión M2 · Async Odyssey de Web Development I, the Client.">
-    <title>M2 · Async Odyssey</title>
+    <meta name="description" content="Consulta la tienda actual de Fortnite, organizada por secciones, con sus ofertas, imágenes y precios en pavos.">
+    <title>Tienda de Fortnite · M2</title>
     <link rel="stylesheet" href="./styles.css">
-    <script type="module" src="./app.js"></script>
+    <script type="module" src="./app.js"></script> <!-- type="module" permite separar JavaScript en archivos que se importan entre sí. -->
   </head>
   <body>
+    <a class="saltar-contenido" href="#contenido">Saltar a la tienda</a>
+
     <header class="cabecera">
-      <p>Web Development I, the Client · U2</p>
-      <h1>Async Odyssey</h1>
-      <p>JavaScript avanzado y herramientas del frontend.</p>
+      <div class="cabecera-interior">
+        <p class="presentacion">La rotación diaria, de un vistazo.</p>
+        <h1>Tienda de Fortnite</h1>
+        <p>Explora las secciones y consulta los precios de las ofertas de hoy.</p>
+      </div>
     </header>
 
-    <main>
-      <section class="panel" aria-labelledby="titulo-proyecto">
-        <h2 id="titulo-proyecto">Plantilla inicial</h2>
-        <p>El punto de partida de la segunda misión.</p>
-        <p id="estado" role="status">Preparando la aplicación…</p>
-      </section>
-      <noscript>Necesitas activar JavaScript para utilizar esta aplicación.</noscript>
+    <main id="contenido" tabindex="-1">
+      <div class="barra-tienda">
+        <div>
+          <p class="fecha-rotacion">Rotación del <time id="fecha">día</time></p>
+          <p id="resumen" class="resumen" role="status"></p>
+        </div>
+        <button id="actualizar" class="boton" type="button">Actualizar tienda</button>
+      </div>
+
+      <div id="aviso" class="aviso">
+        <p id="estado" role="status">Cargando la tienda…</p>
+        <button id="reintentar" class="boton" type="button" hidden>Volver a intentar</button>
+      </div>
+
+      <div id="resultados" class="distribucion" hidden>
+        <nav class="navegacion-secciones" aria-label="Secciones de la tienda">
+          <h2>En esta rotación</h2>
+          <ul id="enlaces-secciones"></ul>
+        </nav>
+        <div id="tienda"></div>
+      </div>
+
+      <noscript>Activa JavaScript para cargar las ofertas de la tienda.</noscript>
     </main>
 
     <footer class="pie">
-      <p>M2 · Async Odyssey · U-tad</p>
+      <section aria-label="Información de la página">
+        <p>Datos de <a href="https://fortnite-api.com/">Fortnite-API</a>. Consulta independiente, sin afiliación con Epic Games.</p>
+        <p>Comprueba los precios y la disponibilidad dentro del juego.</p>
+      </section>
+      <p>M2 · Async Odyssey</p>
     </footer>
   </body>
 </html>

@@ -7,7 +7,8 @@
 - Misión: M2 · Async Odyssey.
 - Repositorio: <https://github.com/chiissuu/M2-PWIC>.
 - Carpeta: `M2-PWIC`, dentro de la carpeta global `PWIC`, junto a `aim-trainer`.
-- Estado: plantilla inicial; temática y API pendientes de elección.
+- Proyecto: Tienda de Fortnite, nombre descriptivo inicial.
+- Estado: primer bloque funcional implementado y comprobado por el agente; el alumno confirma su funcionamiento y está repasando el código antes de hacer commit.
 
 ## Objetivo y rúbrica
 
@@ -26,14 +27,39 @@ Bonus: caché en `localStorage` para evitar peticiones repetidas. Los detalles d
 
 ## Base actual
 
-- `index.html` contiene la estructura semántica y carga `app.js` como módulo.
-- `styles.css` contiene una presentación provisional.
-- `app.js` escribe un mensaje de preparación en el DOM.
+- `index.html` contiene cabecera, controles, mensajes de estado y contenedores de navegación y tienda.
+- `styles.css` organiza tarjetas y secciones, con navegación lateral en escritorio y horizontal en móvil.
+- `app.js` coordina la carga inicial, la actualización, el reintento y los estados.
+- `js/api.js` consulta `https://fortnite-api.com/v2/shop?language=es`, comprueba `response.ok`, limita la espera a 15 segundos y valida la lista de ofertas.
+- `js/datos.js` normaliza ofertas con `map`, descarta entradas inválidas con `filter` y agrupa por sección mediante `reduce`.
+- `js/vista.js` crea tarjetas y enlaces y representa carga, resultados, tienda vacía y error.
 - `assets/` está reservado para recursos locales. `.gitkeep` permite conservar la carpeta en Git mientras está vacía.
 - `package.json` define `dev`, `build` y `preview`, con Vite como única dependencia directa.
 - `docs/` conserva contexto, tareas, decisiones, estudio, uso de IA, reflexiones y sesiones.
 
-Todavía no hay una API seleccionada ni separación funcional en módulos de API, datos y vista. Esos módulos se crearán cuando tengan una responsabilidad concreta.
+Las imágenes se cargan desde las direcciones recibidas en la API. Cada oferta se muestra una sola vez, aunque incluya varios artículos; no se descompone el precio de los lotes. Los nombres se insertan con `textContent` y las imágenes fallidas tienen una alternativa visible.
+
+## Alcance confirmado
+
+El alumno elige mostrar únicamente la tienda actual de Fortnite de forma organizada. El primer bloque incluye fecha, secciones, tarjetas con imágenes y precios, navegación, actualización y estados de carga, error y tienda vacía. No se han añadido presupuesto, compras, estadísticas de jugadores, mapas, buscadores, filtros de usuario, favoritos ni caché. Las ampliaciones se decidirán después de revisar este bloque.
+
+Recorrido: abrir la página, cargar la tienda, consultar ofertas por secciones y actualizar cuando se desee. Si falla la consulta, aparece un mensaje y un botón de reintento.
+
+## Comprobación del primer bloque
+
+El agente probó sintaxis, compilación y Chromium con la tienda real, además de errores y datos incompletos simulados. Se revisaron capturas a 1366 × 900 y 390 × 844 y desbordamiento en siete anchos entre 320 y 1366 píxeles. Se probaron controles de teclado y la espera máxima. El alumno indica que todo funciona correctamente; no se le atribuye la ejecución de las pruebas detalladas del agente.
+
+## Aprendizaje en curso
+
+El alumno ha leído la explicación inicial y solicita un repaso por puntos antes de ampliar funcionalidades. `Estudio.md` recoge el endpoint, GET y JSON, la separación de módulos, el papel de Vite y del navegador, asincronía, construcción del DOM y errores. `UsosMapFilterReduce.md` desarrolla parámetros, retornos, ejemplos y usos reales de esos métodos.
+
+Se aclara que `prepararTienda` normaliza y agrupa datos, mientras que `mostrarTienda` crea el DOM. El alumno ya conocía `querySelector`; pide destacar la creación dinámica con `createElement`, `textContent`, `className` y `append`. La comprensión práctica completa sigue en revisión.
+
+## Propuestas del alumno
+
+El alumno quiere una herramienta que le resulte útil y propone trabajar con Spotify o analizar datos de Fortnite, especialmente de torneos. Confirma disponer de Spotify Premium. Los recursos disponibles, las restricciones y las comprobaciones se recogen en [[Investigacion-APIs]]. No asumir que la API inicialmente enlazada de Fortnite proporciona clasificaciones competitivas.
+
+Después de valorar el acceso de terceros, se priorizan recursos gratuitos sin claves ni inicio de sesión. La elección final para este primer bloque es la tienda de Fortnite-API. Las propuestas de presupuesto y mapas no forman parte del alcance confirmado.
 
 ## Método de trabajo
 

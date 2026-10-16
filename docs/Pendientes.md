@@ -2,7 +2,7 @@
 
 ## Prioridad actual
 
-Guardar el primer avance y elegir la idea y la API antes de implementar funcionalidades.
+El alumno confirma que la primera tienda funciona correctamente y está repasando su código por puntos. Cerrar los apuntes solicitados y realizar el commit personalmente; valorar ampliaciones después de ese repaso.
 
 ## Plantilla
 
@@ -14,18 +14,28 @@ Guardar el primer avance y elegir la idea y la API antes de implementar funciona
 - [x] Comprobar sintaxis, compilación y respuesta del servidor de desarrollo.
 - [x] Comprobar que Git excluye dependencias, compilación, configuración de Obsidian y temporales.
 - [x] Confirmar visualmente la página inicial en el navegador con el alumno, mediante su captura y las salidas de PowerShell.
-- [ ] Realizar el primer commit y push personalmente.
+- [x] Realizar el primer commit y push personalmente; commit `8455969` comprobado en `main` local y remoto.
 
 ## Próximos bloques
 
-- [ ] Elegir temática, nombre y API pública.
-- [ ] Definir una primera versión pequeña y el recorrido principal.
-- [ ] Crear módulos de API, lógica de datos y renderizado.
-- [ ] Consumir la API con `fetch`, `async/await`, `try/catch` y `response.ok`.
-- [ ] Transformar datos con métodos de array apropiados.
-- [ ] Mostrar carga, resultados, error y ausencia de resultados.
-- [ ] Comprobar errores de red, respuestas HTTP no satisfactorias y datos incompletos.
-- [ ] Definir el diseño y comprobar teclado y pantalla estrecha.
+- [x] Investigar las propuestas de Spotify y Fortnite y registrar sus requisitos, limitaciones y fuentes.
+- [x] Comprobar sin credenciales tienda, búsqueda de cosméticos y catálogo de islas de Epic.
+- [x] Elegir temática, nombre descriptivo y API: tienda de Fortnite-API.
+- [x] Confirmar la consulta de tienda en Chromium sin credenciales.
+- [x] Definir una primera versión centrada en mostrar la tienda organizada.
+- [x] Crear módulos de API, lógica de datos y renderizado.
+- [x] Consumir la API con `fetch`, `async/await`, `try/catch` y `response.ok`.
+- [x] Transformar, filtrar y agrupar datos con métodos de array.
+- [x] Mostrar carga, resultados, error y tienda vacía.
+- [x] Comprobar errores de red, HTTP, JSON y estructura inesperada; datos incompletos y reintento.
+- [x] Comprobar actualización sin duplicados y límite de espera de 15 segundos.
+- [x] Preparar diseño inicial y comprobar teclado y pantalla estrecha con el navegador del agente.
+- [x] Recibir la confirmación general del alumno de que la versión funciona correctamente, sin atribuirle pruebas detalladas adicionales.
+- [x] Preparar la explicación del recorrido, la API, los métodos y las funciones en `Estudio.md`.
+- [x] Ampliar los apuntes solicitados y crear `UsosMapFilterReduce.md` con parámetros, retornos y usos reales.
+- [x] Añadir comentarios breves al endpoint, al primer import, a `type="module"` y a la consulta asíncrona.
+- [ ] Resolver las dudas restantes y confirmar con el alumno que puede seguir el flujo y aplicar cambios por su cuenta.
+- [ ] Realizar el commit y push de este avance personalmente después de revisarlo.
 - [ ] Valorar e implementar el bonus de caché después del funcionamiento principal.
 - [ ] Cerrar README, declaración de IA y Autopsia con el trabajo realmente realizado.
 - [ ] Revisar la entrega frente al enunciado y la rúbrica.
@@ -34,4 +44,4 @@ Guardar el primer avance y elegir la idea y la API antes de implementar funciona
 
 - Fecha límite y detalle de los checks automáticos.
 
-La definición de la idea es necesaria para comenzar la funcionalidad principal.
+No hay bloqueos técnicos conocidos en este bloque. La siguiente referencia es la revisión del alumno, no la implementación automática de más funcionalidades.

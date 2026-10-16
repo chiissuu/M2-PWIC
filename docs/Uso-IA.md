@@ -13,6 +13,48 @@ Este registro servirá para redactar la declaración pública del README a parti
 - **Preguntas trabajadas:** cómo verificar la instalación y arrancar la aplicación, qué terminal utilizar y en qué se parece Vite a Live Server y qué aporta además del servidor de desarrollo. La explicación se recoge en `Estudio.md`.
 - **Decisiones pendientes:** temática, API, funcionalidades y diseño definitivo.
 
+## 2026-10-16 · Investigación de APIs
+
+- **Petición del alumno:** investigar los datos y usos de Spotify Web API y Fortnite-API para crear una herramienta personal que cumpla M2.
+- **Aportación propia:** propone las dos temáticas, aporta los enlaces y confirma que tiene Spotify Premium.
+- **Ayuda de IA:** consulta de fuentes primarias, comparación de requisitos y límites, distinción entre estadísticas generales y datos de torneos, y búsqueda de una alternativa especializada.
+- **Comprobaciones del agente:** solicitudes públicas sin credenciales a la tienda y al mapa de Fortnite-API (HTTP 200), y al endpoint de estadísticas (HTTP 401 por ausencia de clave). Las respuestas incluyeron cabeceras CORS abiertas. No se ha probado OAuth de Spotify ni peticiones autenticadas de Fortnite.
+- **Decisiones pendientes:** elección de API y utilidad concreta. No se han registrado aplicaciones, contratado servicios ni añadido credenciales.
+- **Seguimiento:** resultados y fuentes en `Investigacion-APIs.md`. No se ha cambiado el código de la plantilla.
+
+## 2026-10-16 · Alcance de una web gratuita de Fortnite
+
+- **Aportación del alumno:** pide priorizar el acceso gratuito y propone una web de Fortnite con portada, tienda y estadísticas; solicita valorar si resulta demasiado sencilla.
+- **Ayuda de IA:** distingue estadísticas personales de métricas de islas, comprueba recursos públicos y propone una utilidad de planificación de presupuesto para dar sentido a los métodos de array.
+- **Comprobaciones del agente:** HTTP 200 y cabeceras CORS abiertas en tienda, búsqueda de cosméticos y catálogo de islas de Epic. Las métricas de una isla concreta todavía no se han probado.
+- **Estado:** propuestas pendientes de confirmación, sin cambios en la aplicación ni nuevas dependencias. Detalles en `Investigacion-APIs.md`.
+
+## 2026-10-16 · Primera tienda organizada
+
+- **Decisión del alumno:** mostrar únicamente la tienda organizada y valorar ampliaciones después.
+- **Ayuda de IA:** implementación de la petición y los módulos de datos y vista, diseño inicial, manejo de errores y actualización de documentación.
+- **Comprobaciones del agente:** sintaxis y compilación; Chromium con la API real; estados simulados de carga, vacío, HTTP, JSON, red y estructura inválidos; datos incompletos; reintento, actualización, teclado y móvil. El detalle se recoge en `Sesiones/2026-10-16-Tienda-organizada.md`.
+- **Corrección durante la revisión:** columna móvil cambiada de `1fr` a `minmax(0, 1fr)` para contener la navegación horizontal.
+- **Aportación pendiente del alumno:** revisar visualmente esta versión, preguntar por los conceptos que necesite repasar y realizar el commit cuando cierre el avance.
+- **Alcance:** no se han añadido dependencias ni funcionalidades de presupuesto, estadísticas, filtros, favoritos o caché.
+
+## 2026-10-16 · Explicación de la API y del recorrido
+
+- **Petición del alumno:** entender el flujo y las funciones ya implementadas, porque no ha trabajado antes con APIs y quiere poder hacer cambios por su cuenta.
+- **Ayuda de IA:** lectura del código actual y explicación de HTTP, JSON, promesas, `async/await`, módulos, normalización, métodos de array y creación del DOM. Se amplía `Estudio.md` con funciones, ejemplos y pasos para inspeccionar la petición en el navegador.
+- **Alcance:** documentación educativa; no se cambian funcionalidades, configuración ni dependencias y no se ejecutan nuevas pruebas de la aplicación.
+- **Pendiente del alumno:** repasar el recorrido, realizar sus propias comprobaciones y plantear las dudas restantes. No se da por confirmada su comprensión del código.
+
+## 2026-10-16 · Repaso por puntos y apuntes de arrays
+
+- **Aportación del alumno:** lee la explicación, propone los conceptos y esquemas que quiere conservar, acepta la separación de módulos y confirma que la versión funciona correctamente. Indica que ya conocía `querySelector` y que lo explicó en la defensa de M1.
+- **Preguntas reales:** si Vite interpreta el JSON; cómo se relacionan petición, normalización, agrupación y creación del DOM; cómo funcionan `async`, `await`, `fetch`, `map`, `filter` y `reduce`.
+- **Ayuda de IA:** ampliación de `Estudio.md`, creación de `UsosMapFilterReduce.md` y comentarios breves en HTML y JavaScript. Se aclara que el navegador interpreta el JSON y que `prepararTienda` prepara datos mientras `mostrarTienda` crea el DOM.
+- **Alcance:** apuntes y comentarios; no se añaden funcionalidades, dependencias ni cambios de configuración.
+- **Autopsia:** se registran temas técnicos para valorar después, sin redactar la reflexión final del alumno.
+- **Git:** el alumno solicita comandos para guardar el avance y mantiene la ejecución de add, commit y push.
+- **Comprobaciones del agente en este bloque:** sintaxis de los cuatro archivos JavaScript, compilación de producción y formato del diff correctos; `node_modules` y `dist` continúan excluidos de Git. No se repiten las pruebas funcionales de navegador, dado que solo se han modificado comentarios y documentación.
+
 ## Registro de los siguientes bloques
 
 Anotar fecha, petición concreta, aportación del alumno, ayuda recibida, dudas reales, correcciones y comprobaciones. No atribuir al alumno revisiones que todavía no haya confirmado.
