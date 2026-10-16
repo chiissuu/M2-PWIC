@@ -66,7 +66,43 @@ main,
 }
 
 .cabecera-interior {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 2rem;
   padding-block: 2.75rem 2.25rem;
+}
+
+.cabecera-interior > p,
+.cabecera-interior > h1 {
+  grid-column: 1;
+}
+
+.enlaces-vistas {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  grid-column: 2;
+  grid-row: 1 / 4;
+}
+
+.enlaces-vistas a {
+  padding: 0.75rem 1rem;
+  border: 2px solid #ffffff;
+  border-radius: 0.35rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.enlaces-vistas a:hover,
+.enlaces-vistas a[aria-current="page"] {
+  color: var(--azul-oscuro);
+  background-color: var(--amarillo);
+  border-color: var(--amarillo);
+}
+
+.enlaces-vistas a:focus-visible {
+  outline-color: #ffffff;
 }
 
 .presentacion {
@@ -147,6 +183,23 @@ main {
 
 .aviso.es-error {
   border-color: #bd3c4b;
+}
+
+.aviso-almacenamiento {
+  padding: 0.8rem 1rem;
+  border-left: 4px solid #a96a00;
+  background-color: #fff3cf;
+  color: #563700;
+}
+
+#titulo-favoritos {
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.5rem);
+}
+
+.explicacion-favoritos {
+  margin: 0.5rem 0 2rem;
+  color: #475575;
 }
 
 .aviso p {
@@ -236,11 +289,40 @@ main {
 }
 
 .tarjeta-oferta {
+  position: relative;
   height: 100%;
   overflow: hidden;
   border: 1px solid var(--borde);
   border-radius: 0.5rem;
   background-color: #ffffff;
+}
+
+.boton-favorito {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 2px solid var(--azul-oscuro);
+  border-radius: 50%;
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--azul-oscuro);
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.boton-favorito:hover,
+.boton-favorito[aria-pressed="true"] {
+  background-color: var(--amarillo);
+}
+
+.boton-favorito:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .imagen-oferta {
@@ -311,6 +393,17 @@ main {
 }
 
 @media (max-width: 800px) {
+  .cabecera-interior {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .enlaces-vistas {
+    grid-column: 1;
+    grid-row: auto;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+
   .distribucion {
     grid-template-columns: minmax(0, 1fr);
     gap: 1.5rem;

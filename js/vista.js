@@ -7,12 +7,46 @@ const botonActualizar = document.querySelector("#actualizar");
 const botonReintentar = document.querySelector("#reintentar");
 const resumen = document.querySelector("#resumen");
 const fecha = document.querySelector("#fecha");
+const vistaFavoritos = document.querySelector("#favoritos");
+const listaFavoritos = document.querySelector("#lista-favoritos");
+const totalFavoritos = document.querySelector("#total-favoritos");
+const avisoFavoritos = document.querySelector("#aviso-favoritos");
 const formatoNumero = new Intl.NumberFormat("es-ES");
+let seleccionFavoritos = new Set();
+let estrellasHabilitadas = false;
+
+function actualizarEstrella(boton) {
+  const seleccionado = seleccionFavoritos.has(boton.dataset.idOferta);
+  boton.textContent = seleccionado ? "★" : "☆";
+  boton.setAttribute("aria-pressed", String(seleccionado));
+  boton.setAttribute("aria-label", `${seleccionado ? "Quitar de" : "Añadir a"} favoritos: ${boton.dataset.nombreOferta}`);
+  boton.title = boton.getAttribute("aria-label");
+  boton.disabled = !estrellasHabilitadas;
+}
+
+export function actualizarFavoritos(identificadores, habilitados, mensaje) {
+  seleccionFavoritos = new Set(identificadores);
+  estrellasHabilitadas = habilitados;
+  totalFavoritos.textContent = seleccionFavoritos.size;
+  avisoFavoritos.textContent = mensaje;
+  avisoFavoritos.hidden = mensaje === "";
+  document.querySelectorAll(".boton-favorito").forEach(actualizarEstrella);
+}
+
+export function marcarVistaActiva(favoritosActivos) {
+  const enlaceTienda = document.querySelector("#ver-tienda");
+  const enlaceFavoritos = document.querySelector("#ver-favoritos");
+  enlaceTienda.removeAttribute("aria-current");
+  enlaceFavoritos.removeAttribute("aria-current");
+  (favoritosActivos ? enlaceFavoritos : enlaceTienda).setAttribute("aria-current", "page");
+}
 
 export function mostrarCarga() {
   botonActualizar.disabled = true;
   botonReintentar.hidden = true;
   resultados.hidden = true;
+  vistaFavoritos.hidden = true;
+  avisoFavoritos.hidden = true;
   aviso.hidden = false;
   aviso.classList.remove("es-error");
   estado.setAttribute("role", "status");
@@ -22,6 +56,7 @@ export function mostrarCarga() {
   fecha.removeAttribute("datetime");
   contenedorTienda.replaceChildren();
   enlacesSecciones.replaceChildren();
+  listaFavoritos.replaceChildren();
 }
 
 export function habilitarActualizacion() {
@@ -108,6 +143,13 @@ function crearTarjeta(oferta) {
   const tarjeta = document.createElement("article");
   tarjeta.className = "tarjeta-oferta";
 
+  const estrella = document.createElement("button");
+  estrella.className = "boton-favorito";
+  estrella.type = "button";
+  estrella.dataset.idOferta = oferta.id;
+  estrella.dataset.nombreOferta = oferta.nombre;
+  actualizarEstrella(estrella);
+
   const contenido = document.createElement("div");
   contenido.className = "contenido-oferta";
 
@@ -120,7 +162,7 @@ function crearTarjeta(oferta) {
   nombre.textContent = oferta.nombre;
 
   contenido.append(tipo, nombre, crearPrecio(oferta));
-  tarjeta.append(crearImagen(oferta), contenido);
+  tarjeta.append(crearImagen(oferta), estrella, contenido);
   elemento.append(tarjeta);
 
   return elemento;
@@ -164,6 +206,13 @@ function crearEnlaceSeccion(seccion, indice) {
 }
 
 export function mostrarTienda(tienda) {
+  // Cada render reemplaza la vista anterior, también al volver desde favoritos.
+  contenedorTienda.replaceChildren();
+  enlacesSecciones.replaceChildren();
+  listaFavoritos.replaceChildren();
+  vistaFavoritos.hidden = true;
+  resultados.hidden = true;
+  aviso.hidden = false;
   mostrarFecha(tienda.fecha);
   resumen.textContent = `${tienda.total} ${tienda.total === 1 ? "oferta" : "ofertas"} en ${tienda.secciones.length} ${tienda.secciones.length === 1 ? "sección" : "secciones"}`;
 
@@ -176,4 +225,27 @@ export function mostrarTienda(tienda) {
   contenedorTienda.append(...tienda.secciones.map(crearSeccion));
   aviso.hidden = true;
   resultados.hidden = false;
+}
+
+export function mostrarFavoritos(tienda) {
+  const botonesAnteriores = [...listaFavoritos.querySelectorAll(".boton-favorito")];
+  const indiceFoco = botonesAnteriores.indexOf(document.activeElement);
+
+  contenedorTienda.replaceChildren();
+  enlacesSecciones.replaceChildren();
+  listaFavoritos.replaceChildren();
+  resultados.hidden = true;
+  aviso.hidden = true;
+  vistaFavoritos.hidden = false;
+  mostrarFecha(tienda.fecha);
+  resumen.textContent = `${tienda.total} ${tienda.total === 1 ? "favorito" : "favoritos"} en esta rotación`;
+  document.querySelector("#sin-favoritos").hidden = tienda.total > 0;
+  listaFavoritos.append(...tienda.secciones.map(crearSeccion));
+
+  // Al quitar una tarjeta con el teclado, el foco pasa a la siguiente o al título si no quedan.
+  if (indiceFoco >= 0) {
+    const botones = listaFavoritos.querySelectorAll(".boton-favorito");
+    const siguiente = botones[Math.min(indiceFoco, botones.length - 1)];
+    (siguiente || document.querySelector("#titulo-favoritos")).focus({ preventScroll: true });
+  }
 }

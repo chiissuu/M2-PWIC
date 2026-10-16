@@ -13,6 +13,10 @@
 
     <header class="cabecera">
       <div class="cabecera-interior">
+        <nav class="enlaces-vistas" aria-label="Vistas de la tienda">
+          <a id="ver-tienda" href="#contenido" aria-current="page">Tienda</a>
+          <a id="ver-favoritos" href="#favoritos">★ Favoritos (<span id="total-favoritos">0</span>)</a>
+        </nav>
         <p class="presentacion">La rotación diaria, de un vistazo.</p>
         <h1>Tienda de Fortnite</h1>
         <p>Explora las secciones y consulta los precios de las ofertas de hoy.</p>
@@ -28,6 +32,8 @@
         <button id="actualizar" class="boton" type="button">Actualizar tienda</button>
       </div>
 
+      <p id="aviso-favoritos" class="aviso-almacenamiento" role="status" hidden></p>
+
       <div id="aviso" class="aviso">
         <p id="estado" role="status">Cargando la tienda…</p>
         <button id="reintentar" class="boton" type="button" hidden>Volver a intentar</button>
@@ -40,6 +46,13 @@
         </nav>
         <div id="tienda"></div>
       </div>
+
+      <section id="favoritos" aria-labelledby="titulo-favoritos" hidden>
+        <h2 id="titulo-favoritos" tabindex="-1">Favoritos de esta rotación</h2>
+        <p class="explicacion-favoritos">Tu selección se reinicia cuando cargamos una nueva rotación de la tienda.</p>
+        <p id="sin-favoritos" class="aviso" hidden>No tienes favoritos en esta rotación. Marca la estrella de una oferta en la tienda para añadirla.</p>
+        <div id="lista-favoritos"></div>
+      </section>
 
       <noscript>Activa JavaScript para cargar las ofertas de la tienda.</noscript>
     </main>

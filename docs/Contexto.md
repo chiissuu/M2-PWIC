@@ -8,7 +8,7 @@
 - Repositorio: <https://github.com/chiissuu/M2-PWIC>.
 - Carpeta: `M2-PWIC`, dentro de la carpeta global `PWIC`, junto a `aim-trainer`.
 - Proyecto: Tienda de Fortnite, nombre descriptivo inicial.
-- Estado: primer bloque funcional implementado y comprobado por el agente; el alumno confirma su funcionamiento y está repasando el código antes de hacer commit.
+- Estado: tienda inicial confirmada por el alumno y guardada en el commit `16fd4c2`. Favoritos diarios implementados y comprobados por el agente; pendientes de revisión y commit del alumno.
 
 ## Objetivo y rúbrica
 
@@ -27,12 +27,14 @@ Bonus: caché en `localStorage` para evitar peticiones repetidas. Los detalles d
 
 ## Base actual
 
-- `index.html` contiene cabecera, controles, mensajes de estado y contenedores de navegación y tienda.
+- `index.html` contiene cabecera con enlaces a tienda y favoritos, controles, mensajes de estado y contenedores de las dos vistas.
 - `styles.css` organiza tarjetas y secciones, con navegación lateral en escritorio y horizontal en móvil.
-- `app.js` coordina la carga inicial, la actualización, el reintento y los estados.
+- `app.js` coordina la carga inicial, la actualización, el reintento, las estrellas y el cambio de vista mediante el hash de la URL. Conserva la tienda actual en memoria.
 - `js/api.js` consulta `https://fortnite-api.com/v2/shop?language=es`, comprueba `response.ok`, limita la espera a 15 segundos y valida la lista de ofertas.
 - `js/datos.js` normaliza ofertas con `map`, descarta entradas inválidas con `filter` y agrupa por sección mediante `reduce`.
-- `js/vista.js` crea tarjetas y enlaces y representa carga, resultados, tienda vacía y error.
+- `js/datos.js` también obtiene una tienda filtrada por favoritos conservando sus secciones.
+- `js/favoritos.js` guarda fecha UTC e identificadores bajo `m2-pwic:favoritos-diarios`, valida los datos recuperados y reinicia la selección al confirmar otra fecha de rotación.
+- `js/vista.js` crea tarjetas y enlaces, mantiene las estrellas y el contador y representa tienda, favoritos, carga, vacíos y errores.
 - `assets/` está reservado para recursos locales. `.gitkeep` permite conservar la carpeta en Git mientras está vacía.
 - `package.json` define `dev`, `build` y `preview`, con Vite como única dependencia directa.
 - `docs/` conserva contexto, tareas, decisiones, estudio, uso de IA, reflexiones y sesiones.
@@ -41,9 +43,13 @@ Las imágenes se cargan desde las direcciones recibidas en la API. Cada oferta s
 
 ## Alcance confirmado
 
-El alumno elige mostrar únicamente la tienda actual de Fortnite de forma organizada. El primer bloque incluye fecha, secciones, tarjetas con imágenes y precios, navegación, actualización y estados de carga, error y tienda vacía. No se han añadido presupuesto, compras, estadísticas de jugadores, mapas, buscadores, filtros de usuario, favoritos ni caché. Las ampliaciones se decidirán después de revisar este bloque.
+El alumno elige comenzar por la tienda actual de Fortnite organizada y después autoriza favoritos diarios: estrella por oferta y acceso a una vista de favoritos en la cabecera. Se mantiene una tarjeta por oferta completa, incluidos los lotes. No se han añadido presupuesto, compras, estadísticas de jugadores, mapas, buscadores ni caché de respuestas.
 
 Recorrido: abrir la página, cargar la tienda, consultar ofertas por secciones y actualizar cuando se desee. Si falla la consulta, aparece un mensaje y un botón de reintento.
+
+La selección de favoritos se conserva al recargar dentro de la misma fecha de rotación UTC y se reinicia solo cuando una respuesta válida confirma otra fecha. La aplicación no sondea automáticamente la API. Una fecha inválida no modifica lo guardado y desactiva las estrellas; un fallo de consulta no ejecuta la sincronización. Si falla el almacenamiento, la selección sigue en memoria con aviso. Si una oferta deja de aparecer en una respuesta válida de la misma rotación, se retira de la selección disponible.
+
+`#favoritos` muestra la selección y el enlace a `#contenido` vuelve a la tienda. Las tarjetas se reutilizan y los cambios de vista no hacen nuevas peticiones. Los favoritos guardan solo identificadores y fecha, por lo que necesitan cargar la tienda para confirmar la rotación y reconstruir las tarjetas; no son una caché ni una vista sin conexión.
 
 ## Comprobación del primer bloque
 

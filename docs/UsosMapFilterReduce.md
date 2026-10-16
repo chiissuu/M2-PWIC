@@ -299,6 +299,29 @@ Aquí `map` pasa también el índice a los callbacks. `crearSeccion(seccion, ind
 
 Esta parte sí construye elementos del DOM; la transformación previa de `datos.js` solo prepara datos.
 
+## Favoritos diarios: otro uso real de los tres métodos
+
+`seleccionarFavoritos(tienda, identificadores)`, en `js/datos.js`, conserva las secciones originales y prepara una versión que solo contiene ofertas elegidas:
+
+```js
+const seleccion = new Set(identificadores);
+const secciones = tienda.secciones
+  .map((seccion) => ({
+    ...seccion,
+    ofertas: seccion.ofertas.filter((oferta) => seleccion.has(oferta.id)),
+  }))
+  .filter((seccion) => seccion.ofertas.length > 0);
+```
+
+- El `map` construye un objeto nuevo por sección. `...seccion` copia sus propiedades y después se reemplaza `ofertas` por la lista filtrada.
+- El primer `filter` conserva ofertas cuyos identificadores estén en el `Set`. `has` devuelve un booleano.
+- El segundo `filter` elimina secciones vacías para no mostrar títulos sin tarjetas.
+- `secciones.reduce((total, seccion) => total + seccion.ofertas.length, 0)` calcula el número de ofertas seleccionadas que se mostrarán.
+
+No se modifica la tienda completa en memoria, de modo que se puede volver a ella sin repetir la consulta. Si no hay favoritos, el resultado contiene `secciones: []` y `total: 0`.
+
+En `js/favoritos.js` también se usa `ofertas.map((oferta) => oferta.id)` para crear la colección de identificadores disponibles y `filter` para retirar los guardados que ya no aparecen en la respuesta válida.
+
 ## 8. Preguntas para comprobar la comprensión
 
 - Si `normalizarOferta` devuelve `null`, ¿por qué sigue haciendo falta `filter`?

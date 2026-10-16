@@ -2,7 +2,7 @@
 
 ## Prioridad actual
 
-El alumno confirma que la primera tienda funciona correctamente y está repasando su código por puntos. Cerrar los apuntes solicitados y realizar el commit personalmente; valorar ampliaciones después de ese repaso.
+El alumno elige favoritos diarios. El bloque está implementado y comprobado por el agente; falta su revisión visual y realizar el commit y push personalmente. La caché de respuestas sigue pendiente.
 
 ## Plantilla
 
@@ -35,7 +35,9 @@ El alumno confirma que la primera tienda funciona correctamente y está repasand
 - [x] Ampliar los apuntes solicitados y crear `UsosMapFilterReduce.md` con parámetros, retornos y usos reales.
 - [x] Añadir comentarios breves al endpoint, al primer import, a `type="module"` y a la consulta asíncrona.
 - [ ] Resolver las dudas restantes y confirmar con el alumno que puede seguir el flujo y aplicar cambios por su cuenta.
-- [ ] Realizar el commit y push de este avance personalmente después de revisarlo.
+- [x] Realizar el commit de la primera tienda: `16fd4c2` comprobado en `main` local.
+- [ ] Revisar personalmente las estrellas, el contador y la vista de favoritos diarios.
+- [ ] Realizar el commit y push del bloque de favoritos después de revisarlo.
 - [ ] Valorar e implementar el bonus de caché después del funcionamiento principal.
 - [ ] Cerrar README, declaración de IA y Autopsia con el trabajo realmente realizado.
 - [ ] Revisar la entrega frente al enunciado y la rúbrica.
@@ -43,5 +45,18 @@ El alumno confirma que la primera tienda funciona correctamente y está repasand
 ## Información pendiente
 
 - Fecha límite y detalle de los checks automáticos.
+
+## Favoritos diarios
+
+- [x] Confirmar la elección diaria frente a conservar favoritos entre rotaciones.
+- [x] Crear el módulo de favoritos y validar los datos recuperados de `localStorage`.
+- [x] Añadir estrellas, contador y vista reutilizando las tarjetas.
+- [x] Conservar la selección al recargar y actualizar durante la misma rotación.
+- [x] Reiniciar la selección al confirmar otra fecha UTC, sin tocar otras claves del almacenamiento.
+- [x] Probar en Chromium errores de consulta y fecha inválida sin borrar la selección guardada.
+- [x] Probar almacenamiento corrupto, acceso bloqueado y cuota agotada.
+- [x] Probar teclado, favoritos vacíos, historial y entrada directa por `#favoritos`.
+- [x] Revisar capturas de escritorio y móvil y comprobar ausencia de desbordamientos.
+- [x] Comprobar sintaxis y compilación sin añadir dependencias.
 
 No hay bloqueos técnicos conocidos en este bloque. La siguiente referencia es la revisión del alumno, no la implementación automática de más funcionalidades.

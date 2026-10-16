@@ -83,3 +83,19 @@ export function prepararTienda(datos) {
 
   return { fecha: datos.date, total: ofertas.length, secciones };
 }
+
+export function seleccionarFavoritos(tienda, identificadores) {
+  const seleccion = new Set(identificadores);
+  const secciones = tienda.secciones
+    .map((seccion) => ({
+      ...seccion,
+      ofertas: seccion.ofertas.filter((oferta) => seleccion.has(oferta.id)),
+    }))
+    .filter((seccion) => seccion.ofertas.length > 0);
+
+  return {
+    fecha: tienda.fecha,
+    total: secciones.reduce((total, seccion) => total + seccion.ofertas.length, 0),
+    secciones,
+  };
+}

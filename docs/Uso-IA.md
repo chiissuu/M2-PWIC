@@ -55,6 +55,21 @@ Este registro servirá para redactar la declaración pública del README a parti
 - **Git:** el alumno solicita comandos para guardar el avance y mantiene la ejecución de add, commit y push.
 - **Comprobaciones del agente en este bloque:** sintaxis de los cuatro archivos JavaScript, compilación de producción y formato del diff correctos; `node_modules` y `dist` continúan excluidos de Git. No se repiten las pruebas funcionales de navegador, dado que solo se han modificado comentarios y documentación.
 
+## 2026-10-16 · Consulta sobre favoritos y persistencia
+
+- **Propuesta del alumno:** estrella en cada oferta, acceso a favoritos en la cabecera y comparación entre selección diaria y conservación entre rotaciones.
+- **Ayuda de IA:** revisión de los datos normalizados y consulta de documentación de MDN sobre persistencia, origen y cuotas. Comparación de las dos opciones y recomendación de guardar una copia de los datos necesarios para favoritos que sobrevivan a la rotación.
+- **Aclaración sobre la misión:** guardar favoritos no sustituye la caché de respuestas que evita peticiones repetidas y constituye el bonus.
+- **Estado:** se registra la explicación en `Estudio.md`; comportamiento pendiente de elección. No se implementan favoritos, caché, navegación ni cambios visuales y no se ejecutan pruebas nuevas de la aplicación.
+
+## 2026-10-16 · Implementación de favoritos diarios
+
+- **Decisión del alumno:** elegir favoritos limitados a la rotación actual, tras comparar las dos opciones. Solicita desarrollo, explicación y comandos de commit y push.
+- **Ayuda de IA:** módulo de almacenamiento validado, estrellas, contador, vista interna y filtrado de secciones; coordinación con la carga de la tienda, tratamiento de errores y actualización de apuntes.
+- **Comprobaciones del agente:** sintaxis, compilación, Chromium con la API real y respuestas simuladas; persistencia, cambio de fecha, conservación ante errores de consulta, fecha inválida, almacenamiento corrupto o bloqueado, cuota, vacío, teclado, historial y móvil. Detalle en `Sesiones/2026-10-16-Favoritos-diarios.md`.
+- **Estado:** funcionalidad implementada, sin dependencias nuevas. Falta la revisión del alumno de este bloque y su commit/push. Guardar favoritos no implementa la caché de respuestas del bonus.
+- **Aprendizaje documentado:** JSON serializado, clave versionada, Set de identificadores, fecha UTC, delegación de eventos y reutilización de tarjetas sin consultar de nuevo al alternar vistas.
+
 ## Registro de los siguientes bloques
 
 Anotar fecha, petición concreta, aportación del alumno, ayuda recibida, dudas reales, correcciones y comprobaciones. No atribuir al alumno revisiones que todavía no haya confirmado.

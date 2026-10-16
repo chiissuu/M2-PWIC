@@ -101,6 +101,7 @@ La carpeta `js/` es una decisión de organización, no un requisito del lenguaje
 | `app.js` | Coordina el funcionamiento general. |
 | `js/api.js` | Solicita los datos y comprueba la respuesta. |
 | `js/datos.js` | Simplifica y agrupa las ofertas. |
+| `js/favoritos.js` | Valida, conserva y guarda la selección de favoritos por rotación. |
 | `js/vista.js` | Convierte los datos preparados en elementos de la página. |
 | `styles.css` | Define cómo se ven y distribuyen esos elementos. |
 
@@ -329,9 +330,9 @@ Estas comprobaciones cubren los casos revisados; no garantizan que el proveedor 
 
 Para presentar otra propiedad de la API, primero se comprueba su nombre en la respuesta real, después se incorpora al formato de `normalizarOferta` y por último se muestra en la vista. No basta con añadir el texto a CSS.
 
-Un futuro buscador debería reutilizar los datos ya descargados. Actualmente `tienda` es local a `cargarTienda`; habría que conservar la tienda completa para poder obtener resultados filtrados sin perderla. También habría que adaptar el renderizado para reemplazar las listas al buscar, porque `mostrarTienda` añade nodos y actualmente depende de que `mostrarCarga` haya limpiado antes. Llamar a `cargarTienda` en cada tecla repetiría consultas innecesarias.
+Un futuro buscador debería reutilizar los datos ya descargados. Desde el bloque de favoritos, `app.js` conserva `tiendaActual` fuera de `cargarTienda`, y las funciones de vista reemplazan sus listas antes de pintarlas. Esa misma base permitirá filtrar sin perder la tienda completa. Llamar a `cargarTienda` en cada tecla repetiría consultas innecesarias.
 
-No hay todavía caché de aplicación ni persistencia en `localStorage`. Al volver a abrir o actualizar se ejecuta otra consulta, aunque el navegador pueda tener sus propias cachés HTTP. Se consulta la tienda de la rotación actual, no todo el catálogo histórico de Fortnite.
+Los favoritos diarios sí tienen persistencia en `localStorage`. No hay todavía caché de respuestas: al volver a abrir o actualizar se ejecuta otra consulta, aunque el navegador pueda tener sus propias cachés HTTP. Se consulta la tienda de la rotación actual, no todo el catálogo histórico de Fortnite.
 
 ### Cómo observarlo por cuenta propia
 
@@ -342,3 +343,125 @@ No hay todavía caché de aplicación ni persistencia en `localStorage`. Al volv
 5. En elementos (`Elements`), localizar una tarjeta: existe en el DOM aunque no estuviera escrita en el HTML inicial.
 
 El alumno ha leído la explicación, confirma que la aplicación funciona correctamente y pide consolidar estos apuntes antes de hacer commit. Se ha corregido la distinción entre preparar datos y crear el DOM. El repaso continúa por puntos; esto no sustituye una comprobación práctica de que puede modificar todo el código por su cuenta.
+
+## Propuesta de favoritos y localStorage
+
+El alumno propone una estrella en cada tarjeta y un acceso a favoritos en el espacio derecho de la cabecera. Se comparan favoritos solo durante la rotación actual y favoritos conservados entre días. Después el alumno elige la primera opción: favoritos diarios, implementados en este bloque.
+
+`localStorage` almacena claves y valores de texto en el navegador. No tiene una caducidad automática: conserva los datos entre sesiones, pero no garantiza conservarlos para siempre. El usuario puede borrarlos y las políticas del navegador pueden limitar su conservación; en navegación privada se eliminan al cerrar la última pestaña privada. Para guardar objetos y arrays usamos `JSON.stringify` y para recuperarlos `JSON.parse`. Referencia: [localStorage en MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage).
+
+El almacenamiento pertenece al origen de la web (protocolo, servidor y puerto) y al navegador/perfil utilizado. Los favoritos de localhost no pasan automáticamente a la web publicada ni al móvil. Un HTML de favoritos en el mismo origen sí puede leer ese almacenamiento. El límite habitual de localStorage es de 5 MiB por origen; guardaríamos textos y URLs, no los archivos de las imágenes. Referencia: [cuotas de almacenamiento en MDN](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria).
+
+| Opción | Funcionamiento propuesto | Consecuencia |
+| --- | --- | --- |
+| Solo la rotación actual | Guardar la fecha de rotación y descartar o ignorar la selección anterior cuando una respuesta válida confirme otra rotación. | Lista temporal de lo que interesa hoy. |
+| Entre rotaciones | Conservar una copia de los datos necesarios de cada oferta hasta que se quite de favoritos. | Lista personal que sigue visible aunque la oferta deje la tienda. |
+
+Para la segunda opción no basta con guardar identificadores: si mañana la oferta no aparece en la respuesta, no podríamos reconstruir su tarjeta con los datos de esa nueva tienda. Guardaríamos identificador, nombre, tipo, URL de imagen, precio observado y fecha de rotación. Ese precio sería histórico; guardar un favorito no mantiene una oferta disponible ni garantiza que siga funcionando su URL de imagen. Tampoco asumimos que el identificador de una oferta sea un identificador permanente del cosmético para futuras apariciones.
+
+La recomendación inicial del agente fue conservar favoritos entre días, pero la decisión posterior del alumno es hacerlos diarios. Se muestra un acceso como «★ Favoritos (3)» en la cabecera y una vista interna reutiliza las tarjetas. La unidad seleccionada es la oferta completa, incluido el lote, no cada artículo individual de su interior.
+
+Favoritos y caché son responsabilidades distintas. Los favoritos recuerdan elecciones; la caché de M2 guarda datos de la API para evitar repetir peticiones mientras sean válidos. Para cubrir el bonus hace falta esa reutilización de datos, no solo guardar estrellas. La propuesta de implementación incremental es elegir primero el comportamiento de favoritos y desarrollar después la caché como bloque separado, con su criterio de caducidad y actualización manual.
+
+## Funcionamiento de los favoritos diarios implementados
+
+### Qué se guarda realmente
+
+Usamos una sola clave de la aplicación: `m2-pwic:favoritos-diarios`. Su valor es texto JSON con esta estructura de ejemplo:
+
+```json
+{
+  "version": 1,
+  "rotacion": "2026-10-16",
+  "ids": ["oferta-ejemplo-a", "oferta-ejemplo-b"]
+}
+```
+
+`version` identifica nuestro formato de almacenamiento, no la versión de la API. `rotacion` es el día UTC de la fecha recibida de la tienda. `ids` contiene los identificadores de las ofertas elegidas. Como solo duran esa rotación, no hace falta guardar una copia de nombres, precios o imágenes: se obtienen de la tienda recién cargada.
+
+En `js/favoritos.js`, la lectura usa:
+
+```js
+const contenido = localStorage.getItem(CLAVE_FAVORITOS);
+const datos = contenido ? JSON.parse(contenido) : null;
+```
+
+`getItem` obtiene texto o `null` si no hay valor. `JSON.parse` interpreta ese texto; se comprueban versión, fecha y lista de identificadores antes de usarlo. Si la lectura o el JSON fallan, el `catch` evita que se detenga la aplicación.
+
+Para guardar usamos `localStorage.setItem(CLAVE_FAVORITOS, JSON.stringify(...))`. `JSON.stringify` convierte el objeto a texto y `setItem` crea o reemplaza el valor de esa clave. No usamos `localStorage.clear()`: las demás claves del navegador quedan intactas.
+
+### El Set de selección
+
+Durante la ejecución guardamos los identificadores en un `Set`: una colección que no repite valores. Nos permite preguntar por una selección o alternarla sin mantener duplicados:
+
+| Operación | Uso |
+| --- | --- |
+| `identificadores.has(id)` | Saber si una oferta está seleccionada. |
+| `identificadores.add(id)` | Añadirla. |
+| `identificadores.delete(id)` | Quitarla. |
+| `identificadores.clear()` | Vaciar este Set al cambiar la rotación; no borra todo localStorage. |
+| `[...identificadores]` | Convertirlo en un array para guardar JSON o pasarlo a otras funciones. |
+
+### Funciones del nuevo módulo
+
+| Función | Responsabilidad |
+| --- | --- |
+| `obtenerDia(valor)` | Obtener el día UTC o `null` si no se reconoce una fecha válida. |
+| `leerFavoritos()` | Leer y validar el objeto guardado al cargar el módulo. |
+| `guardarFavoritos()` | Guardar el estado actual; capturar fallos de escritura. |
+| `sincronizarFavoritos(fecha, ofertas)` | Confirmar la rotación, reiniciar si cambia y conservar solo identificadores disponibles. |
+| `alternarFavorito(id)` | Añadir o quitar una oferta válida y guardar el cambio. |
+| `obtenerIdsFavoritos()` | Entregar los identificadores seleccionados de la rotación confirmada. |
+| `permitirFavoritos()` | Indicar si tenemos una fecha válida para permitir estrellas. |
+| `obtenerAvisoFavoritos()` | Entregar un mensaje si falta fecha o no se puede guardar. |
+
+Las tres primeras funciones son internas. Las restantes se exportan para que `app.js` coordine el estado sin introducir accesos a `localStorage` dentro de cada tarjeta.
+
+### Cuándo se reinician
+
+Después de obtener y preparar una respuesta válida, `cargarTienda` llama a `sincronizarFavoritos`. Se compara el día UTC recibido con el guardado:
+
+- Si coincide, se conserva la selección que sigue disponible.
+- Si cambia, se vacía la selección y se guarda la nueva fecha.
+- Si falta una fecha válida, se conserva el almacenamiento anterior y las estrellas quedan desactivadas con un aviso.
+- Si falla la consulta antes de este punto, no se sincronizan ni se borran favoritos.
+
+Si la respuesta válida deja de incluir una oferta, su identificador se retira. Una lista válida vacía deja la selección disponible vacía. Esto es diferente de un error de consulta, que no modifica lo guardado.
+
+La aplicación no consulta en segundo plano ni programa un borrado a medianoche. Detecta otra rotación al volver a abrir o actualizar con éxito. Si se deja la pestaña abierta toda la noche, conserva lo mostrado hasta esa nueva consulta.
+
+### Desde el clic hasta la vista de favoritos
+
+```text
+crearTarjeta() → crea el botón de estrella y guarda el id en data-id-oferta
+          ↓
+clic en una estrella → listener de main en app.js
+          ↓
+alternarFavorito(id) → modifica el Set y guarda JSON
+          ↓
+actualizarFavoritos() → actualiza estrellas, contador y aviso
+          ↓
+si estamos en favoritos → recalcular selección y volver a mostrarla
+```
+
+Un único listener en `main` atiende las estrellas de ambas vistas. Esto se llama delegación de eventos: el clic se propaga desde el botón a su contenedor y `closest` localiza el botón afectado. El atributo `aria-pressed` indica si está seleccionado; la etiqueta accesible explica si añade o quita esa oferta. Las estrellas funcionan con Enter y espacio.
+
+El enlace de la cabecera cambia el hash a `#favoritos`. `app.js` atiende `hashchange`, elige la vista y conserva el funcionamiento del historial. Un enlace a una sección de la tienda no se interpreta como un cambio de vista.
+
+`seleccionarFavoritos(tiendaActual, ids)` crea secciones filtradas sin modificar la tienda completa. `mostrarFavoritos` utiliza `crearSeccion` y `crearTarjeta`, las mismas funciones de la tienda. Al quitar una tarjeta con el teclado se mantiene el foco en otra estrella o en el título si ya no queda ninguna. Las listas anteriores se vacían antes de dibujar para no duplicar tarjetas ni identificadores HTML.
+
+Cambiar de vista no necesita `fetch`. Recargar sí consulta la tienda para confirmar su fecha. Los identificadores guardados no permiten mostrar por sí solos una tienda sin conexión: esa sería otra responsabilidad.
+
+### Si localStorage falla
+
+Los accesos se protegen con `try/catch`. Ante bloqueo del navegador o falta de espacio, la selección puede seguir en memoria durante esta página abierta y aparece un aviso de que no se ha podido guardar. No se presenta el cambio como persistente. Al recargar podría perderse lo que no pudo guardarse.
+
+### Cómo comprobarlo tú
+
+1. Marca dos ofertas y comprueba las estrellas y el contador.
+2. Abre favoritos y quita una. Vuelve a la tienda y revisa su estrella.
+3. Recarga durante la misma rotación y comprueba que la selección sigue guardada.
+4. En las herramientas de Chrome, abre `Application` → `Local Storage` → origen de la página y busca `m2-pwic:favoritos-diarios`.
+5. Examina el JSON: fecha, versión e identificadores. El cambio de rotación se ha probado con respuestas simuladas; no es necesario esperar al día siguiente para comprobar esa rama durante el desarrollo.
+
+La caché del bonus sigue pendiente: todavía no se evita la petición inicial ni la actualización manual a partir de una respuesta guardada.

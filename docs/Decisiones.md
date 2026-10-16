@@ -49,3 +49,19 @@ Registrar aquí elecciones que afecten a la estructura, el funcionamiento o la d
 **Motivo:** da prioridad al contenido de la tienda sin descargar de inmediato todas las imágenes de una rotación extensa. No se han añadido tipografías, librerías ni recursos gráficos nuevos al repositorio.
 
 **Alternativa descartada:** ampliar primero la portada o añadir animaciones en lugar de comprobar las ofertas y los estados.
+
+## Favoritos limitados a la rotación actual
+
+**Decisión del alumno:** elegir favoritos diarios entre las dos opciones comparadas. Cada estrella selecciona una oferta completa; la selección se conserva al recargar dentro de la misma rotación.
+
+**Motivo técnico:** guardar identificadores y el día UTC indicado por la API permite recuperar las tarjetas desde la tienda actual sin duplicar sus datos. La selección se reinicia al confirmar otra fecha válida de rotación, no al cambiar el reloj local ni ante un fallo de red. Si una oferta deja la respuesta actual, se elimina su identificador de la selección disponible.
+
+**Alternativa descartada para este bloque:** favoritos entre días, que necesitarían conservar datos de tarjetas antiguas y distinguir precios históricos de disponibilidad actual. La caché de respuestas del bonus queda pendiente como funcionalidad distinta.
+
+## Vista interna y módulo de almacenamiento
+
+**Decisión:** añadir `js/favoritos.js`, con almacenamiento bajo una clave propia y esquema versionado; utilizar `#favoritos` para cambiar de vista y reutilizar las tarjetas existentes.
+
+**Motivo:** conserva la separación entre persistencia, datos y DOM. El hash permite abrir la vista directamente y usar el historial del navegador sin añadir dependencias ni una configuración de varias páginas. Los cambios de vista utilizan la tienda en memoria y no repiten peticiones.
+
+**Alternativas descartadas:** duplicar HTML y lógica en otra página, o mezclar accesos a `localStorage` dentro de cada tarjeta. Si el almacenamiento falla, se permite continuar en memoria y se avisa; si la fecha de rotación no es válida, se desactiva la selección para no sobrescribir la anterior sin una referencia fiable.

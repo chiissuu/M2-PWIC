@@ -14,5 +14,6 @@ Documentación de aprendizaje y seguimiento de la segunda misión, consultable c
 - [[Sesiones/2026-10-16-Investigacion-APIs]]: investigación previa a elegir la temática.
 - [[Sesiones/2026-10-16-Tienda-organizada]]: primer bloque funcional y sus comprobaciones.
 - [[Sesiones/2026-10-16-Repaso-API-y-arrays]]: aclaraciones solicitadas, comentarios de código y guías de estudio.
+- [[Sesiones/2026-10-16-Favoritos-diarios]]: selección por estrellas, almacenamiento diario y pruebas de persistencia.
 
 El README presenta el proyecto a una persona que no conoce su desarrollo. Esta carpeta conserva el proceso de aprendizaje.
