@@ -70,6 +70,21 @@ Este registro servirá para redactar la declaración pública del README a parti
 - **Estado:** funcionalidad implementada, sin dependencias nuevas. Falta la revisión del alumno de este bloque y su commit/push. Guardar favoritos no implementa la caché de respuestas del bonus.
 - **Aprendizaje documentado:** JSON serializado, clave versionada, Set de identificadores, fecha UTC, delegación de eventos y reutilización de tarjetas sin consultar de nuevo al alternar vistas.
 
+## 2026-10-16 · Recursos del alumno y diseño oscuro
+
+- **Aportación propia del alumno:** PNG del título, SVG de onda, texto exacto de descripción y petición de eliminar la frase superior y usar fondo gris oscuro con imágenes sobre negro.
+- **Ayuda de IA:** integración de los recursos locales, ajuste de HTML y CSS, elección de tonos oscuros y plateados a partir del PNG y adaptación de los controles y las dos vistas.
+- **Comprobaciones del agente:** PNG original idéntico por SHA-256, compilación correcta, recursos cargados, contraste de seis pares de texto/fondo superior a 4,5:1, nueve anchos sin solapamientos ni desbordamientos y capturas de escritorio y móvil inspeccionadas. API real y favoritos con recarga y teclado; carga, error y vacío simulados. Detalles en `Sesiones/2026-10-16-Diseno-oscuro.md`.
+- **Alcance:** presentación y documentación; sin cambios en JavaScript ni dependencias nuevas. Pendiente de revisión visual del alumno y de su commit/push.
+
+## 2026-10-16 · Guía de almacenamiento y revisión visual
+
+- **Petición del alumno:** documento independiente `localStorage.md`; fuente Fortnite excepto descripción y footer; hero negro con degradado rojo; botones principales más grandes y con acabado plateado; fondo de tienda claro y footer negro con una única atribución enlazada.
+- **Aportación propia:** tres capturas para mostrar el estado de hero, tienda y favoritos, otro SVG, dos archivos OTF y la dirección de diseño que quiere probar. Pide aprender cómo se diseñan los botones.
+- **Ayuda de IA:** comprobación de que ambos OTF son idénticos, integración de una sola fuente y del SVG, ajustes de HTML/CSS, creación de la guía de almacenamiento y explicación de degradados, sombras y estados de botones en `Estudio.md`.
+- **Comprobaciones del agente:** compilación y carga de fuente, tipografías excluidas, colores y contenido de footer, hover y movimiento reducido, nueve anchos sin desbordamiento ni solapamiento de título y navegación, seis pares de contraste superiores a 4,5:1 y favoritos con persistencia y teclado. Capturas de hero, tienda, favoritos y footer inspeccionadas.
+- **Alcance:** presentación y documentación; no se cambia la lógica de favoritos ni se añaden dependencias npm. Pendientes la valoración personal del alumno sobre esta prueba visual y su commit/push.
+
 ## Registro de los siguientes bloques
 
 Anotar fecha, petición concreta, aportación del alumno, ayuda recibida, dudas reales, correcciones y comprobaciones. No atribuir al alumno revisiones que todavía no haya confirmado.

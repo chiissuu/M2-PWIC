@@ -7,8 +7,8 @@
 - Misión: M2 · Async Odyssey.
 - Repositorio: <https://github.com/chiissuu/M2-PWIC>.
 - Carpeta: `M2-PWIC`, dentro de la carpeta global `PWIC`, junto a `aim-trainer`.
-- Proyecto: Tienda de Fortnite, nombre descriptivo inicial.
-- Estado: tienda inicial confirmada por el alumno y guardada en el commit `16fd4c2`. Favoritos diarios implementados y comprobados por el agente; pendientes de revisión y commit del alumno.
+- Proyecto: Fortnite Daily Shop!, identidad de título aportada por el alumno; inicialmente denominado Tienda de Fortnite.
+- Estado: tienda inicial guardada en `16fd4c2` y favoritos diarios en `0eaef51`, comprobados en `main` local. Revisión visual con fuente Burbank, hero negro y rojo, tienda clara y botones facetados implementada y comprobada por el agente; pendiente de revisión y commit del alumno.
 
 ## Objetivo y rúbrica
 
@@ -35,7 +35,8 @@ Bonus: caché en `localStorage` para evitar peticiones repetidas. Los detalles d
 - `js/datos.js` también obtiene una tienda filtrada por favoritos conservando sus secciones.
 - `js/favoritos.js` guarda fecha UTC e identificadores bajo `m2-pwic:favoritos-diarios`, valida los datos recuperados y reinicia la selección al confirmar otra fecha de rotación.
 - `js/vista.js` crea tarjetas y enlaces, mantiene las estrellas y el contador y representa tienda, favoritos, carga, vacíos y errores.
-- `assets/` está reservado para recursos locales. `.gitkeep` permite conservar la carpeta en Git mientras está vacía.
+- `assets/fortnite-daily-shop.png` contiene el PNG original del título aportado por el alumno. `assets/waves.svg` conserva el trazado aportado, con relleno adaptado al color de la cabecera.
+- `assets/burbank-big-condensed-black.otf` contiene la fuente local; los dos archivos tipográficos aportados eran idénticos y se conserva una sola copia.
 - `package.json` define `dev`, `build` y `preview`, con Vite como única dependencia directa.
 - `docs/` conserva contexto, tareas, decisiones, estudio, uso de IA, reflexiones y sesiones.
 
@@ -61,6 +62,8 @@ El alumno ha leído la explicación inicial y solicita un repaso por puntos ante
 
 Se aclara que `prepararTienda` normaliza y agrupa datos, mientras que `mostrarTienda` crea el DOM. El alumno ya conocía `querySelector`; pide destacar la creación dinámica con `createElement`, `textContent`, `className` y `append`. La comprensión práctica completa sigue en revisión.
 
+`localStorage.md` desarrolla en un documento independiente el almacenamiento, el esquema JSON, la relación entre módulos, las funciones y los recorridos de carga y selección. `Estudio.md` incorpora la explicación de los botones mediante degradados, bisel, sombras, transformaciones y estados CSS.
+
 ## Propuestas del alumno
 
 El alumno quiere una herramienta que le resulte útil y propone trabajar con Spotify o analizar datos de Fortnite, especialmente de torneos. Confirma disponer de Spotify Premium. Los recursos disponibles, las restricciones y las comprobaciones se recogen en [[Investigacion-APIs]]. No asumir que la API inicialmente enlazada de Fortnite proporciona clasificaciones competitivas.
@@ -72,3 +75,11 @@ Después de valorar el acceso de terceros, se priorizan recursos gratuitos sin c
 Desarrollar bloques pequeños, comprobarlos y explicar los conceptos desconocidos antes de cerrar cada avance. El alumno gestiona los commits y los pushes. Registrar únicamente pruebas realizadas y conservar literalmente su redacción final de la Autopsia.
 
 La misión M3 permitirá reconstruir o reinventar esta aplicación con React 19. En M2 se trabajará con JavaScript y DOM.
+
+## Diseño visual actual
+
+Se conserva el PNG completo con transparencia y texto alternativo en un `h1`, la descripción aportada y el separador SVG sin frase superior ni línea amarilla. El alumno solicita revisar el diseño previo oscuro con fuente Fortnite, fondo claro y botones más grandes.
+
+Paleta actual: hero y footer negros; degradado rojo limitado al área del PNG; página `#f4f5f7`, tarjetas blancas, zona de imagen negra y texto oscuro. Los dos enlaces principales tienen fondo facetado plateado, mayor tamaño y separación; el primero dice «¡Vamos a la tienda!». La fuente Burbank se usa en la interfaz excepto descripción y footer, que conservan Segoe UI. El footer ocupa todo el ancho, sin línea superior, y solo contiene la atribución enlazada en blanco y negrita.
+
+El relleno del SVG y `--fondo-cabecera` son negros y deben mantenerse iguales si se modifica ese color. El SVG nuevo tiene el mismo trazado que el anterior, por lo que se adapta su presentación. No se cambian la consulta, los datos ni la lógica de favoritos en este bloque.

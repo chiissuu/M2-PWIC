@@ -465,3 +465,76 @@ Los accesos se protegen con `try/catch`. Ante bloqueo del navegador o falta de e
 5. Examina el JSON: fecha, versión e identificadores. El cambio de rotación se ha probado con respuestas simuladas; no es necesario esperar al día siguiente para comprobar esa rama durante el desarrollo.
 
 La caché del bonus sigue pendiente: todavía no se evita la petición inicial ni la actualización manual a partir de una respuesta guardada.
+
+## Título de imagen, SVG y colores
+
+El alumno aporta un PNG transparente como título y un SVG como separador. Se copian a `assets/` para que formen parte del repositorio y de la compilación, sin depender de la carpeta Descargas.
+
+- El título sigue siendo un `h1`; dentro contiene un `img` con `alt="Fortnite Daily Shop!"`. Esto conserva el significado del encabezado aunque su contenido visual sea una imagen.
+- El PNG original no se modifica. CSS lo hace adaptable con `width: 100%` y `height: auto`; los atributos de tamaño indican su proporción original.
+- La onda es decorativa: `alt=""` y `aria-hidden="true"` evitan anunciarla como contenido. El SVG conserva su trazado y se modifica únicamente su presentación y relleno.
+- Las variables de `:root` reúnen los colores reutilizados. En el diseño actual, `--fondo-cabecera` y el atributo `fill` de `assets/waves.svg` usan negro; si cambia la cabecera hay que actualizar ambos para evitar una separación visible.
+- `.imagen-oferta` utiliza negro puro, mientras que `.tarjeta-oferta` ahora es blanca sobre una página gris muy clara. Los PNG transparentes dejan ver el fondo negro; una imagen de la API que incluya su propio fondo conserva ese fondo.
+- `color-scheme: light` informa al navegador del esquema claro de la interfaz actual. Los colores concretos del hero y del footer siguen siendo negros según sus reglas CSS.
+
+Este bloque modifica presentación y recursos locales. El flujo de la API, la normalización y el almacenamiento de favoritos se mantienen.
+
+La explicación independiente y completa del almacenamiento está en [localStorage.md](localStorage.md).
+
+## Cómo cargamos la fuente Fortnite
+
+Los dos OTF aportados son el mismo archivo, comprobado mediante SHA-256. Por eso copiamos solo uno, `assets/burbank-big-condensed-black.otf`, y declaramos un nombre que utilizaremos desde CSS:
+
+```css
+@font-face {
+  font-family: "Fortnite";
+  src: url("./assets/burbank-big-condensed-black.otf") format("opentype");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+```
+
+`@font-face` registra la fuente local; `font-family: "Fortnite"` la aplica a los elementos. El nombre de CSS es un alias elegido por nosotros. `font-display: swap` permite mostrar texto con una alternativa mientras termina la descarga. No instalamos la fuente en el sistema de quien visita la web ni añadimos una dependencia npm.
+
+La interfaz hereda esa familia desde `:root`. La descripción del hero y el footer sobrescriben `font-family` para conservar Segoe UI, tal como pide el alumno. El PNG del título sigue siendo una imagen y no cambia por aplicar una fuente al documento.
+
+## Cómo se construyen los botones plateados
+
+El alumno pide aprender a dar diseño a botones sin disponer de una imagen de referencia. En esta prueba se utilizan varias capas CSS. No se necesita JavaScript para cambiar su apariencia al interactuar.
+
+| Propiedad o selector | Efecto visual |
+| --- | --- |
+| `padding` y `min-height` | Aumentan el área del enlace y dejan espacio alrededor del texto. |
+| `gap` del contenedor | Separa los dos botones. |
+| `linear-gradient` | Alterna franjas claras y azuladas para sugerir facetas de un material plateado. |
+| `border` | Dibuja el borde exterior luminoso. |
+| `box-shadow: inset ...` | Añade luces y sombras por dentro para simular un bisel. |
+| Sombras exteriores | Separan el botón del negro y sugieren grosor. |
+| `transform: skewX(-5deg)` | Inclina ligeramente la silueta. |
+| `transform: skewX(5deg)` del span interior | Compensa la inclinación para mantener el texto recto. |
+| `:hover` | Aclara el botón con `brightness(1.12)` y lo eleva tres píxeles. |
+| `:active` | Lo baja y acorta la sombra mientras se pulsa. |
+| `:focus-visible` | Marca el enlace cuando se utiliza el teclado. |
+| `[aria-current="page"]` | Subraya la vista activa; no es lo mismo que hover. |
+| `prefers-reduced-motion` | Elimina la transición y los desplazamientos para quien solicita reducir movimiento. |
+
+Ejemplo reducido, con menos capas que el CSS real:
+
+```css
+.enlaces-vistas a {
+  background: linear-gradient(135deg, #f5fdff, #a8cbd8, #bedae5);
+  border: 2px solid #e5f4fa;
+  box-shadow: inset 0 2px 0 white, 0 6px 0 #668b9b;
+  transform: skewX(-5deg);
+}
+
+.enlaces-vistas a:hover {
+  filter: brightness(1.12);
+  transform: translateY(-3px) skewX(-5deg);
+}
+```
+
+La forma práctica de diseñarlos es ajustar una capa cada vez: tamaño, separación, color, borde y sombra; después comprobar hover, pulsación y teclado. Los cambios deben seguir mostrando con claridad qué enlace se puede activar. El texto «¡Vamos a la tienda!» tiene una exclamación de apertura y otra de cierre.
+
+En este contexto, **hero/header** es la cabecera, **hover** es el estado al pasar el ratón y **footer** es el pie. El footer actual contiene solo la atribución enlazada, conserva la tipografía de lectura y utiliza blanco en negrita sobre negro.

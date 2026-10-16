@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Consulta la tienda actual de Fortnite, organizada por secciones, con sus ofertas, imágenes y precios en pavos.">
-    <title>Tienda de Fortnite · M2</title>
+    <title>Fortnite Daily Shop! · M2</title>
     <link rel="stylesheet" href="./styles.css">
     <script type="module" src="./app.js"></script> <!-- type="module" permite separar JavaScript en archivos que se importan entre sí. -->
   </head>
@@ -13,15 +13,16 @@
 
     <header class="cabecera">
       <div class="cabecera-interior">
+        <h1><img class="titulo-imagen" src="./assets/fortnite-daily-shop.png" width="3150" height="1770" alt="Fortnite Daily Shop!"></h1>
+        <p class="descripcion-cabecera">Tu página web de confianza para ver las nuevas novedades de la tienda del videojuego Fortnite diariamente sin fallos. Se diferencia de las demás ya que puedes guardar tus recursos preferidos para mas tarde</p>
         <nav class="enlaces-vistas" aria-label="Vistas de la tienda">
-          <a id="ver-tienda" href="#contenido" aria-current="page">Tienda</a>
-          <a id="ver-favoritos" href="#favoritos">★ Favoritos (<span id="total-favoritos">0</span>)</a>
+          <a id="ver-tienda" href="#contenido" aria-current="page"><span>¡Vamos a la tienda!</span></a>
+          <a id="ver-favoritos" href="#favoritos"><span>★ Mis favoritos (<span id="total-favoritos">0</span>)</span></a>
         </nav>
-        <p class="presentacion">La rotación diaria, de un vistazo.</p>
-        <h1>Tienda de Fortnite</h1>
-        <p>Explora las secciones y consulta los precios de las ofertas de hoy.</p>
       </div>
     </header>
+
+    <img class="separador-onda" src="./assets/waves.svg" width="1200" height="120" alt="" aria-hidden="true">
 
     <main id="contenido" tabindex="-1">
       <div class="barra-tienda">
@@ -58,11 +59,7 @@
     </main>
 
     <footer class="pie">
-      <section aria-label="Información de la página">
-        <p>Datos de <a href="https://fortnite-api.com/">Fortnite-API</a>. Consulta independiente, sin afiliación con Epic Games.</p>
-        <p>Comprueba los precios y la disponibilidad dentro del juego.</p>
-      </section>
-      <p>M2 · Async Odyssey</p>
+      <p>Se obtienen los datos desde la API gratis pública de: <a href="https://fortnite-api.com/">Fortnite-API</a></p>
     </footer>
   </body>
 </html>

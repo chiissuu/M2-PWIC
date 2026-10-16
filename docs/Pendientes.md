@@ -2,7 +2,7 @@
 
 ## Prioridad actual
 
-El alumno elige favoritos diarios. El bloque está implementado y comprobado por el agente; falta su revisión visual y realizar el commit y push personalmente. La caché de respuestas sigue pendiente.
+El alumno solicita una guía independiente de localStorage y probar fuente Fortnite, hero negro con rojo, tienda clara, botones facetados y footer simplificado. Está implementado y comprobado por el agente; falta su revisión y el commit/push del avance visual, que todavía parte del commit de favoritos. La caché de respuestas sigue pendiente.
 
 ## Plantilla
 
@@ -37,7 +37,8 @@ El alumno elige favoritos diarios. El bloque está implementado y comprobado por
 - [ ] Resolver las dudas restantes y confirmar con el alumno que puede seguir el flujo y aplicar cambios por su cuenta.
 - [x] Realizar el commit de la primera tienda: `16fd4c2` comprobado en `main` local.
 - [ ] Revisar personalmente las estrellas, el contador y la vista de favoritos diarios.
-- [ ] Realizar el commit y push del bloque de favoritos después de revisarlo.
+- [x] Realizar el commit de favoritos: `0eaef51` comprobado en `main` local.
+- [ ] Realizar el commit y push del nuevo diseño después de revisarlo.
 - [ ] Valorar e implementar el bonus de caché después del funcionamiento principal.
 - [ ] Cerrar README, declaración de IA y Autopsia con el trabajo realmente realizado.
 - [ ] Revisar la entrega frente al enunciado y la rúbrica.
@@ -60,3 +61,25 @@ El alumno elige favoritos diarios. El bloque está implementado y comprobado por
 - [x] Comprobar sintaxis y compilación sin añadir dependencias.
 
 No hay bloqueos técnicos conocidos en este bloque. La siguiente referencia es la revisión del alumno, no la implementación automática de más funcionalidades.
+
+## Título PNG y diseño oscuro
+
+- [x] Integrar el PNG original y la descripción literal aportados por el alumno; eliminar la frase superior.
+- [x] Sustituir la línea amarilla por el SVG aportado, con el color de la cabecera.
+- [x] Aplicar gris oscuro a la página, negro a las imágenes y colores legibles a textos y controles.
+- [x] Comprobar compilación, carga de recursos y contraste de textos principales.
+- [x] Revisar capturas de escritorio y móvil y nueve anchos entre 320 y 1920 píxeles.
+- [x] Comprobar que siguen funcionando favoritos, recarga, teclado y estados de carga, error y vacío.
+- [ ] Confirmar personalmente el diseño nuevo en el navegador.
+
+## Revisión tipográfica, botones y guía localStorage
+
+- [x] Crear `localStorage.md` con conceptos, archivos, esquema, funciones, recorridos y límites reales.
+- [x] Comprobar que ambos OTF son idénticos y cargar una sola fuente local con `@font-face`.
+- [x] Mantener la tipografía de lectura en descripción y footer; adaptar el tamaño del resto de textos.
+- [x] Probar fondo claro, hero negro con rojo y onda negra a partir del recurso aportado.
+- [x] Crear botones principales más grandes, separados y con acabado plateado y estados de interacción.
+- [x] Simplificar y ampliar el footer negro a todo el ancho con atribución blanca en negrita.
+- [x] Comprobar compilación, carga de fuente, excepciones tipográficas, contraste, hover y movimiento reducido.
+- [x] Comprobar nueve anchos, favoritos persistentes y teclado; inspeccionar capturas de hero, tienda, favoritos y footer.
+- [ ] Recibir la valoración del alumno sobre esta prueba visual antes de considerar cerrado el diseño.

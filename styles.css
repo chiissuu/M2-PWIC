@@ -1,12 +1,25 @@
+@font-face {
+  font-family: "Fortnite";
+  src: url("./assets/burbank-big-condensed-black.otf") format("opentype");
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+}
+
 :root {
-  font-family: "Segoe UI", Arial, sans-serif;
-  line-height: 1.5;
-  color: #18264c;
-  background-color: #f3f5ff;
-  --azul: #1756e8;
-  --azul-oscuro: #132653;
-  --amarillo: #ffe35b;
-  --borde: #dbe1f0;
+  font-family: "Fortnite", Impact, Arial, sans-serif;
+  font-weight: 900;
+  line-height: 1.4;
+  color-scheme: light;
+  color: #17202a;
+  background-color: #f4f5f7;
+  --fuente-lectura: "Segoe UI", Arial, sans-serif;
+  --fondo-cabecera: #000000; /* Mismo color que el relleno de assets/waves.svg. */
+  --fondo-tarjeta: #ffffff;
+  --texto-secundario: #48545f;
+  --acento: #b9d7e0;
+  --texto-control: #10232c;
+  --borde: #c7d0d8;
 }
 
 * {
@@ -15,6 +28,7 @@
 
 body {
   margin: 0;
+  font-size: 1.25rem;
 }
 
 /* El atributo hidden debe prevalecer sobre los diseños con grid y flex. */
@@ -33,7 +47,7 @@ a {
 
 button:focus-visible,
 a:focus-visible {
-  outline: 3px solid var(--azul);
+  outline: 3px solid #a31c36;
   outline-offset: 4px;
 }
 
@@ -43,8 +57,8 @@ a:focus-visible {
   left: 1rem;
   z-index: 2;
   padding: 0.75rem 1rem;
-  color: var(--azul-oscuro);
-  background: #ffffff;
+  color: var(--texto-control);
+  background: var(--acento);
   transform: translateY(-200%);
 }
 
@@ -53,14 +67,12 @@ a:focus-visible {
 }
 
 .cabecera {
-  border-bottom: 7px solid var(--amarillo);
-  color: #ffffff;
-  background-color: var(--azul);
+  color: #edf3f5;
+  background-color: var(--fondo-cabecera);
 }
 
 .cabecera-interior,
-main,
-.pie {
+main {
   width: min(100% - 3rem, 84rem);
   margin-inline: auto;
 }
@@ -68,8 +80,9 @@ main,
 .cabecera-interior {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  column-gap: 2rem;
-  padding-block: 2.75rem 2.25rem;
+  align-items: center;
+  column-gap: 3rem;
+  padding-block: 1rem 2rem;
 }
 
 .cabecera-interior > p,
@@ -79,53 +92,92 @@ main,
 
 .enlaces-vistas {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1.75rem;
+  width: 18rem;
   grid-column: 2;
-  grid-row: 1 / 4;
+  grid-row: 1 / 3;
 }
 
 .enlaces-vistas a {
-  padding: 0.75rem 1rem;
-  border: 2px solid #ffffff;
-  border-radius: 0.35rem;
-  font-weight: 700;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 4.75rem;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5f4fa;
+  border-radius: 0.2rem;
+  font-size: 1.9rem;
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--texto-control);
+  /* Las franjas del degradado sugieren facetas; las sombras crean el bisel. */
+  background: linear-gradient(135deg, #f5fdff 0%, #cee8f0 28%, #a8cbd8 52%, #e2f3fa 75%, #bedae5 100%);
+  box-shadow: inset 0 2px 0 #ffffff, inset 0 -3px 0 #91b5c5, 0 6px 0 #668b9b, 0 12px 22px #00000066;
   text-decoration: none;
   white-space: nowrap;
+  transform: skewX(-5deg);
+  transition: transform 160ms ease, filter 160ms ease, box-shadow 160ms ease;
 }
 
-.enlaces-vistas a:hover,
+.enlaces-vistas a > span {
+  transform: skewX(5deg);
+}
+
 .enlaces-vistas a[aria-current="page"] {
-  color: var(--azul-oscuro);
-  background-color: var(--amarillo);
-  border-color: var(--amarillo);
+  border-color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.enlaces-vistas a:hover {
+  filter: brightness(1.12);
+  transform: translateY(-3px) skewX(-5deg);
+  box-shadow: inset 0 2px 0 #ffffff, inset 0 -3px 0 #91b5c5, 0 9px 0 #668b9b, 0 16px 26px #00000077;
+}
+
+.enlaces-vistas a:active {
+  transform: translateY(3px) skewX(-5deg);
+  box-shadow: inset 0 2px 0 #ffffff, inset 0 -3px 0 #91b5c5, 0 3px 0 #668b9b;
 }
 
 .enlaces-vistas a:focus-visible {
   outline-color: #ffffff;
 }
 
-.presentacion {
-  margin: 0 0 0.75rem;
-  font-weight: 600;
-}
-
-h1,
 .seccion-tienda h2 {
-  font-family: Impact, "Arial Narrow", sans-serif;
-  font-weight: 400;
+  font-weight: 900;
   line-height: 1.05;
 }
 
 h1 {
   margin: 0;
-  font-size: clamp(3rem, 7vw, 5.75rem);
+  max-width: 38rem;
+  line-height: 1;
+  background: radial-gradient(ellipse closest-side at 50% 50%, #a51b35 0%, #68102399 45%, transparent 100%);
 }
 
-.cabecera-interior > p:last-child {
-  max-width: 42rem;
-  margin-bottom: 0;
+.titulo-imagen {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.descripcion-cabecera {
+  max-width: 46rem;
+  margin: 1rem 0 0;
+  color: #dce7ec;
+  font-family: var(--fuente-lectura);
   font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1.7;
+}
+
+.separador-onda {
+  display: block;
+  width: 100%;
+  height: clamp(2rem, 5vw, 4.5rem);
 }
 
 main {
@@ -143,29 +195,30 @@ main {
 
 .fecha-rotacion {
   margin: 0;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 900;
 }
 
 .resumen {
   min-height: 1.5em;
   margin: 0.25rem 0 0;
-  color: #475575;
+  color: var(--texto-secundario);
+  font-size: 1.2rem;
 }
 
 .boton {
   padding: 0.8rem 1.1rem;
-  border: 2px solid var(--azul-oscuro);
+  border: 2px solid var(--acento);
   border-radius: 0.35rem;
   font: inherit;
-  font-weight: 700;
-  color: var(--azul-oscuro);
-  background-color: var(--amarillo);
+  font-weight: 900;
+  color: var(--texto-control);
+  background-color: var(--acento);
   cursor: pointer;
 }
 
 .boton:hover:not(:disabled) {
-  background-color: #ffed97;
+  background-color: #d6e8ef;
 }
 
 .boton:disabled {
@@ -178,28 +231,29 @@ main {
   border: 1px solid var(--borde);
   border-radius: 0.5rem;
   text-align: center;
-  background-color: #ffffff;
+  background-color: var(--fondo-tarjeta);
 }
 
 .aviso.es-error {
-  border-color: #bd3c4b;
+  border-color: #b33148;
 }
 
 .aviso-almacenamiento {
   padding: 0.8rem 1rem;
-  border-left: 4px solid #a96a00;
-  background-color: #fff3cf;
-  color: #563700;
+  border-left: 4px solid #e9bd77;
+  background-color: #3b3020;
+  color: #ffe0ad;
 }
 
 #titulo-favoritos {
   margin: 0;
-  font-size: clamp(1.7rem, 3vw, 2.5rem);
+  font-size: clamp(2.2rem, 4vw, 3.3rem);
+  font-weight: 900;
 }
 
 .explicacion-favoritos {
   margin: 0.5rem 0 2rem;
-  color: #475575;
+  color: var(--texto-secundario);
 }
 
 .aviso p {
@@ -228,7 +282,8 @@ main {
 
 .navegacion-secciones h2 {
   margin: 0 0 0.9rem;
-  font-size: 0.95rem;
+  font-size: 1.2rem;
+  font-weight: 900;
 }
 
 .navegacion-secciones ul {
@@ -245,13 +300,13 @@ main {
   border-left: 3px solid var(--borde);
   text-decoration: none;
   overflow-wrap: anywhere;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .navegacion-secciones a:hover {
-  border-color: var(--azul);
-  color: var(--azul);
-  background-color: #e6ebff;
+  border-color: var(--acento);
+  color: #17202a;
+  background-color: var(--fondo-tarjeta);
 }
 
 .seccion-tienda {
@@ -268,15 +323,15 @@ main {
 
 .seccion-tienda h2 {
   margin: 0;
-  font-size: clamp(1.9rem, 3vw, 2.7rem);
+  font-size: clamp(2.3rem, 4vw, 3.2rem);
   overflow-wrap: anywhere;
 }
 
 .cantidad-ofertas {
   flex-shrink: 0;
   margin: 0;
-  color: #475575;
-  font-size: 0.85rem;
+  color: var(--texto-secundario);
+  font-size: 1.1rem;
 }
 
 .cuadricula-ofertas {
@@ -294,7 +349,7 @@ main {
   overflow: hidden;
   border: 1px solid var(--borde);
   border-radius: 0.5rem;
-  background-color: #ffffff;
+  background-color: var(--fondo-tarjeta);
 }
 
 .boton-favorito {
@@ -306,18 +361,19 @@ main {
   width: 2.75rem;
   height: 2.75rem;
   padding: 0;
-  border: 2px solid var(--azul-oscuro);
+  border: 2px solid var(--acento);
   border-radius: 50%;
   font-size: 1.7rem;
   line-height: 1;
-  color: var(--azul-oscuro);
-  background-color: #ffffff;
+  color: var(--acento);
+  background-color: #15191d;
   cursor: pointer;
 }
 
 .boton-favorito:hover,
 .boton-favorito[aria-pressed="true"] {
-  background-color: var(--amarillo);
+  color: var(--texto-control);
+  background-color: var(--acento);
 }
 
 .boton-favorito:disabled {
@@ -330,8 +386,8 @@ main {
   place-items: center;
   aspect-ratio: 1;
   padding: 0.75rem;
-  color: #475575;
-  background-color: #e7ecff;
+  color: #c8d5dc;
+  background-color: #000000;
 }
 
 .imagen-oferta img {
@@ -343,7 +399,7 @@ main {
 }
 
 .imagen-oferta span {
-  font-size: 0.85rem;
+  font-size: 1.1rem;
 }
 
 .contenido-oferta {
@@ -352,14 +408,15 @@ main {
 
 .tipo-oferta {
   margin: 0 0 0.3rem;
-  color: #536182;
-  font-size: 0.8rem;
+  color: var(--texto-secundario);
+  font-size: 1rem;
 }
 
 .nombre-oferta {
   margin: 0;
   overflow-wrap: anywhere;
-  font-size: 1.05rem;
+  font-size: 1.3rem;
+  font-weight: 900;
   line-height: 1.3;
 }
 
@@ -369,27 +426,38 @@ main {
   align-items: baseline;
   gap: 0.5rem;
   margin: 0.85rem 0 0;
-  font-weight: 800;
+  font-size: 1.4rem;
+  font-weight: 900;
 }
 
 .precio-oferta del {
-  color: #64708a;
-  font-size: 0.8rem;
-  font-weight: 400;
+  color: var(--texto-secundario);
+  font-size: 1rem;
+  font-weight: 900;
 }
 
 .pie {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem 2rem;
-  padding-block: 1.5rem 2rem;
-  border-top: 1px solid var(--borde);
-  color: #536182;
-  font-size: 0.8rem;
+  padding-block: 2.5rem;
+  color: #ffffff;
+  background-color: #000000;
+  font-family: var(--fuente-lectura);
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
 }
 
 .pie p {
-  margin: 0 0 0.3rem;
+  width: min(100% - 3rem, 84rem);
+  margin: 0 auto;
+}
+
+.pie a {
+  text-underline-offset: 0.2em;
+}
+
+.pie a:hover {
+  color: var(--acento);
 }
 
 @media (max-width: 800px) {
@@ -399,9 +467,28 @@ main {
 
   .enlaces-vistas {
     grid-column: 1;
-    grid-row: auto;
+    grid-row: 3;
+    flex-direction: row;
     flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    justify-content: center;
+    gap: 1.5rem;
+    width: 100%;
+    margin-top: 2rem;
+  }
+
+  .cabecera-interior > h1 {
+    grid-row: 1;
+  }
+
+  .cabecera-interior > p {
+    grid-row: 2;
+  }
+
+  .enlaces-vistas a {
+    width: auto;
+    min-width: 15rem;
+    flex: 1 1 15rem;
+    font-size: 1.65rem;
   }
 
   .distribucion {
@@ -426,19 +513,22 @@ main {
     border: 1px solid var(--borde);
     border-radius: 0.3rem;
     white-space: nowrap;
-    background-color: #ffffff;
+    background-color: var(--fondo-tarjeta);
   }
 }
 
 @media (max-width: 480px) {
   .cabecera-interior,
-  main,
-  .pie {
+  main {
     width: calc(100% - 2rem);
   }
 
   .cabecera-interior {
-    padding-block: 2rem;
+    padding-block: 1.5rem;
+  }
+
+  .descripcion-cabecera {
+    font-size: 0.95rem;
   }
 
   .barra-tienda {
@@ -457,7 +547,7 @@ main {
   }
 
   .nombre-oferta {
-    font-size: 0.95rem;
+    font-size: 1.15rem;
   }
 
   .cabecera-seccion {
@@ -466,7 +556,15 @@ main {
     gap: 0.3rem;
   }
 
-  .pie {
-    flex-direction: column;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enlaces-vistas a {
+    transition: none;
+  }
+
+  .enlaces-vistas a:hover,
+  .enlaces-vistas a:active {
+    transform: skewX(-5deg);
   }
 }

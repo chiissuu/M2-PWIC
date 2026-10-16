@@ -1,4 +1,4 @@
-# Tienda de Fortnite
+# Fortnite Daily Shop!
 
 M2 · Async Odyssey — U2 · JavaScript avanzado y herramientas del frontend.
 Web Development I, the Client · U-tad.
@@ -6,6 +6,8 @@ Web Development I, the Client · U-tad.
 ## Descripción del proyecto
 
 Aplicación desarrollada con HTML, CSS, JavaScript y Vite que consulta la tienda actual de Fortnite y organiza sus ofertas por secciones. Cada tarjeta muestra una imagen, el nombre, el tipo y el precio en pavos; los lotes conservan una sola tarjeta y un único precio por oferta.
+
+La identidad visual utiliza el PNG de título, el separador SVG y la fuente Burbank aportados por el alumno. Hero negro con degradado rojo detrás del título, tienda y favoritos sobre gris muy claro y zonas de imagen negras. Los enlaces principales tienen acabado plateado con volumen y estados de interacción. La descripción y el footer conservan una tipografía de lectura; el footer es negro con atribución blanca en negrita. El título conserva un encabezado `h1` con texto alternativo y la onda es decorativa.
 
 La página muestra la fecha de la rotación, el número de ofertas y enlaces para recorrer las secciones. Permite actualizar los datos y distingue carga, error y tienda vacía. Los datos proceden de [Fortnite-API](https://fortnite-api.com/), un servicio comunitario no oficial de Epic Games. La consulta utilizada no requiere cuenta ni API key.
 
@@ -63,7 +65,8 @@ Utiliza el servidor de Vite para ejecutar los módulos ES.
 | `js/datos.js` | Normalización, filtrado de entradas inválidas y agrupación de ofertas. |
 | `js/favoritos.js` | Lectura, validación y guardado de favoritos por día de rotación. |
 | `js/vista.js` | Tarjetas, navegación, fechas, precios y estados de la interfaz. |
-| `assets/` | Recursos gráficos y otros archivos locales que se incorporen al proyecto. |
+| `assets/` | PNG original del título y SVG de onda aportados por el alumno. |
+| `assets/burbank-big-condensed-black.otf` | Fuente local utilizada en la tienda y los controles; se carga con `@font-face`. |
 | `package.json` | Datos del proyecto, scripts y dependencia de Vite. |
 | `package-lock.json` | Versiones de las dependencias para instalaciones reproducibles. |
 | `.gitignore` | Exclusiones de dependencias instaladas, compilación y archivos locales. |
@@ -85,6 +88,8 @@ Utiliza el servidor de Vite para ejecutar los módulos ES.
 - Persistencia en `localStorage`, validación de datos guardados y alternativa en memoria si falla el almacenamiento.
 
 Los requisitos y las funcionalidades por desarrollar se siguen en `docs/Pendientes.md`.
+
+El funcionamiento del almacenamiento, su relación con cada módulo y los esquemas de carga y selección se explican en [docs/localStorage.md](docs/localStorage.md). Los efectos de los botones y la carga de fuentes se explican en [docs/Estudio.md](docs/Estudio.md).
 
 ## Comprobaciones realizadas
 
@@ -108,6 +113,8 @@ El alumno comprobó Node.js, npm, Vite y la plantilla previa en el navegador. De
 - Favoritos con respuestas simuladas: persistencia, eliminación por teclado, vacío, cambio de fecha, fecha inválida y conservación de la selección ante errores HTTP, de red y estructura.
 - Almacenamiento simulado corrupto, estructura guardada incorrecta, acceso bloqueado y cuota agotada: recuperación o selección en memoria con aviso, sin errores JavaScript no controlados.
 - Capturas de favoritos revisadas en escritorio y móvil; sin desbordamiento en 1440, 1024, 801, 800, 480, 390 y 320 píxeles CSS.
+- Diseño oscuro: recursos cargados, descripción solicitada, PNG original sin modificaciones y zona de imágenes negra; capturas revisadas y nueve anchos entre 320 y 1920 píxeles sin desbordamientos ni solapamientos entre título y navegación. Contraste de los seis pares de texto/fondo comprobados superior a 4,5:1. Estados de carga, error y vacío, y favoritos con recarga y teclado comprobados.
+- Revisión posterior de diseño: fuente local cargada y excepciones de descripción y footer confirmadas; hero negro y rojo, fondos claros, imágenes negras y footer de ancho completo. Nueve anchos sin desbordamiento ni solapamiento de título y navegación; hover, movimiento reducido, favoritos con recarga y teclado y seis pares de contraste superiores a 4,5:1. Capturas de hero, tienda, favoritos y footer inspeccionadas.
 
 Las pruebas de interfaz se ejecutaron en Chromium sin interfaz visible y se inspeccionaron capturas de escritorio y móvil. Son comprobaciones del agente; no sustituyen la revisión personal del alumno. No se han incorporado herramientas de pruebas como dependencias del proyecto ni se han guardado pruebas auxiliares en el repositorio.
 
@@ -118,6 +125,10 @@ El alumno proporcionó el enunciado, la rúbrica y la teoría, y solicitó una p
 El alumno propuso Spotify y Fortnite como posibles temáticas y decidió comenzar mostrando únicamente la tienda de Fortnite organizada. Codex ayudó a investigar las APIs, a implementar la consulta y los módulos de datos y vista, y a comprobar casos de error y adaptación a móvil.
 
 Después de comparar favoritos diarios y conservados entre rotaciones, el alumno eligió la opción diaria y solicitó implementarla. Codex ayudó a crear el módulo de almacenamiento, las estrellas, la navegación entre vistas y las comprobaciones de persistencia y errores. La revisión personal del alumno de este nuevo bloque sigue pendiente.
+
+El alumno aportó después el PNG del título y el SVG de onda, redactó la nueva descripción y solicitó el fondo oscuro y las imágenes sobre negro. Codex ayudó a integrar los recursos y ajustar HTML, colores, composición y adaptación móvil. Las comprobaciones del diseño las realizó el agente; falta su revisión personal por el alumno.
+
+En una revisión posterior, el alumno aportó la fuente y otro archivo SVG y pidió probar hero negro con rojo, tienda clara, botones mayores y footer simplificado. Codex integró una sola copia de las dos fuentes idénticas, ajustó el diseño y preparó explicaciones de localStorage y de los estados visuales de los botones.
 
 El alumno aporta las decisiones de alcance y gestiona Git y GitHub. El registro de asistencia, aportaciones propias y verificaciones se mantiene en `docs/Uso-IA.md`.
 

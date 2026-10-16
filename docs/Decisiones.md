@@ -65,3 +65,23 @@ Registrar aquí elecciones que afecten a la estructura, el funcionamiento o la d
 **Motivo:** conserva la separación entre persistencia, datos y DOM. El hash permite abrir la vista directamente y usar el historial del navegador sin añadir dependencias ni una configuración de varias páginas. Los cambios de vista utilizan la tienda en memoria y no repiten peticiones.
 
 **Alternativas descartadas:** duplicar HTML y lógica en otra página, o mezclar accesos a `localStorage` dentro de cada tarjeta. Si el almacenamiento falla, se permite continuar en memoria y se avisa; si la fecha de rotación no es válida, se desactiva la selección para no sobrescribir la anterior sin una referencia fiable.
+
+## Identidad visual aportada y paleta oscura
+
+**Decisión del alumno:** sustituir el título por el PNG aportado, usar su nueva descripción, quitar la frase superior, sustituir la línea amarilla por su SVG de onda y aplicar fondo gris oscuro con imágenes sobre negro.
+
+**Implementación:** PNG original completo dentro del `h1`, con texto alternativo «Fortnite Daily Shop!». Cabecera azul petróleo oscuro para acompañar las letras plateadas; SVG con el mismo relleno. Controles y texto claros, con colores plateados para selección y foco. No se modifica la lógica JavaScript.
+
+**Motivo:** seguir los recursos y la dirección visual del alumno manteniendo la lectura, los controles y la adaptación móvil. Se conserva el PNG original de aproximadamente 2,7 MB; no se genera ni se sustituye por una imagen nueva. Una optimización futura sería una tarea independiente.
+
+## Revisión del hero, fuente local y fondo claro
+
+**Decisión posterior del alumno:** probar hero negro con degradado rojo detrás del PNG, fondo gris muy claro en tienda y favoritos, tipografía Fortnite excepto descripción y footer y enlaces principales más grandes y separados.
+
+**Implementación:** los dos OTF aportados tienen el mismo SHA-256 y familia interna «Burbank Big Cd Bk»; se copia uno a `assets/` y se declara con `@font-face`. La descripción y el footer conservan Segoe UI. El nuevo SVG tiene el mismo trazado que el anterior y se adapta a negro para cerrar el hero sobre el fondo claro.
+
+**Botones:** acabado plateado mediante degradado, borde luminoso, sombras de bisel e inclinación leve; texto con inclinación compensada. Hover más claro y elevado, pulsación más baja, foco visible y eliminación del movimiento cuando se solicita reducirlo. Se utiliza CSS sin bibliotecas ni imágenes nuevas de botones.
+
+**Footer:** a petición del alumno, solo la atribución a Fortnite-API, en blanco y negrita sobre negro a todo el ancho, sin línea divisoria.
+
+**Alternativa reemplazada:** hero azul petróleo y fondo oscuro de la revisión anterior. Es una prueba visual solicitada; el PNG original y la lógica de favoritos se conservan.
