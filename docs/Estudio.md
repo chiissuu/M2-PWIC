@@ -497,7 +497,7 @@ Los dos OTF aportados son el mismo archivo, comprobado mediante SHA-256. Por eso
 
 `@font-face` registra la fuente local; `font-family: "Fortnite"` la aplica a los elementos. El nombre de CSS es un alias elegido por nosotros. `font-display: swap` permite mostrar texto con una alternativa mientras termina la descarga. No instalamos la fuente en el sistema de quien visita la web ni añadimos una dependencia npm.
 
-La interfaz hereda esa familia desde `:root`. La descripción del hero y el footer sobrescriben `font-family` para conservar Segoe UI, tal como pide el alumno. El PNG del título sigue siendo una imagen y no cambia por aplicar una fuente al documento.
+La interfaz hereda esa familia desde `:root`. La descripción del hero y el footer sobrescriben `font-family`: inicialmente conservaban Segoe UI y ahora utilizan Garet Heavy, aportada por el alumno y registrada con otro `@font-face`. El PNG del título sigue siendo una imagen y no cambia por aplicar una fuente al documento.
 
 ## Cómo se construyen los botones plateados
 
@@ -537,4 +537,10 @@ Ejemplo reducido, con menos capas que el CSS real:
 
 La forma práctica de diseñarlos es ajustar una capa cada vez: tamaño, separación, color, borde y sombra; después comprobar hover, pulsación y teclado. Los cambios deben seguir mostrando con claridad qué enlace se puede activar. El texto «¡Vamos a la tienda!» tiene una exclamación de apertura y otra de cierre.
 
-En este contexto, **hero/header** es la cabecera, **hover** es el estado al pasar el ratón y **footer** es el pie. El footer actual contiene solo la atribución enlazada, conserva la tipografía de lectura y utiliza blanco en negrita sobre negro.
+En este contexto, **hero/header** es la cabecera, **hover** es el estado al pasar el ratón y **footer** es el pie. El footer actual contiene solo la atribución enlazada y utiliza Garet Heavy en blanco sobre negro.
+
+## Retoques sin cambiar el almacenamiento
+
+`--acabado-diamante` permite reutilizar el mismo degradado en enlaces, actualización, reintento y estrellas. El span interior de cada estrella mantiene recto su símbolo; `actualizarEstrella` cambia ese texto y conserva el botón, sus atributos y su foco. El halo usa `h1::before` con un área mayor que el PNG, sin modificar la imagen original; la cabecera recorta el desbordamiento del efecto.
+
+`marcarVistaActiva` oculta `#informacion-tienda` al entrar en favoritos. `mostrarFavoritos` obtiene el texto de fecha devuelto por `mostrarFecha` y construye el título y el recuento propio en `#resumen-favoritos`. La fecha procede de la API y se presenta en UTC. Al volver a tienda reaparecen sus metadatos. Es un cambio de presentación: `js/favoritos.js` sigue guardando el mismo JSON y aplicando la misma caducidad diaria.

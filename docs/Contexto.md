@@ -8,7 +8,7 @@
 - Repositorio: <https://github.com/chiissuu/M2-PWIC>.
 - Carpeta: `M2-PWIC`, dentro de la carpeta global `PWIC`, junto a `aim-trainer`.
 - Proyecto: Fortnite Daily Shop!, identidad de título aportada por el alumno; inicialmente denominado Tienda de Fortnite.
-- Estado: tienda inicial guardada en `16fd4c2` y favoritos diarios en `0eaef51`, comprobados en `main` local. Revisión visual con fuente Burbank, hero negro y rojo, tienda clara y botones facetados implementada y comprobada por el agente; pendiente de revisión y commit del alumno.
+- Estado: avance visual anterior confirmado por el alumno y guardado en `c88e8d9`, comprobado en `main` local. Retoques con Garet, halo azul hielo y nueva cabecera de favoritos implementados y comprobados por el agente; pendientes de revisión y commit del alumno.
 
 ## Objetivo y rúbrica
 
@@ -37,6 +37,7 @@ Bonus: caché en `localStorage` para evitar peticiones repetidas. Los detalles d
 - `js/vista.js` crea tarjetas y enlaces, mantiene las estrellas y el contador y representa tienda, favoritos, carga, vacíos y errores.
 - `assets/fortnite-daily-shop.png` contiene el PNG original del título aportado por el alumno. `assets/waves.svg` conserva el trazado aportado, con relleno adaptado al color de la cabecera.
 - `assets/burbank-big-condensed-black.otf` contiene la fuente local; los dos archivos tipográficos aportados eran idénticos y se conserva una sola copia.
+- `assets/garet-heavy.ttf` contiene la fuente aportada para descripción y footer.
 - `package.json` define `dev`, `build` y `preview`, con Vite como única dependencia directa.
 - `docs/` conserva contexto, tareas, decisiones, estudio, uso de IA, reflexiones y sesiones.
 
@@ -72,6 +73,8 @@ Después de valorar el acceso de terceros, se priorizan recursos gratuitos sin c
 
 ## Método de trabajo
 
+El 17 de octubre el alumno confirma el guardado y el reinicio diario de favoritos. Se prepara la declaración de IA del README siguiendo M1 y se proponen temas para su Autopsia, cuya redacción final sigue siendo suya. La caché de respuestas del bonus es independiente del almacenamiento de favoritos y todavía no está implementada. El siguiente cierre es el commit/push del alumno y la entrega de su reflexión; la evaluación del repositorio queda para cuando la solicite después.
+
 Desarrollar bloques pequeños, comprobarlos y explicar los conceptos desconocidos antes de cerrar cada avance. El alumno gestiona los commits y los pushes. Registrar únicamente pruebas realizadas y conservar literalmente su redacción final de la Autopsia.
 
 La misión M3 permitirá reconstruir o reinventar esta aplicación con React 19. En M2 se trabajará con JavaScript y DOM.
@@ -80,6 +83,8 @@ La misión M3 permitirá reconstruir o reinventar esta aplicación con React 19.
 
 Se conserva el PNG completo con transparencia y texto alternativo en un `h1`, la descripción aportada y el separador SVG sin frase superior ni línea amarilla. El alumno solicita revisar el diseño previo oscuro con fuente Fortnite, fondo claro y botones más grandes.
 
-Paleta actual: hero y footer negros; degradado rojo limitado al área del PNG; página `#f4f5f7`, tarjetas blancas, zona de imagen negra y texto oscuro. Los dos enlaces principales tienen fondo facetado plateado, mayor tamaño y separación; el primero dice «¡Vamos a la tienda!». La fuente Burbank se usa en la interfaz excepto descripción y footer, que conservan Segoe UI. El footer ocupa todo el ancho, sin línea superior, y solo contiene la atribución enlazada en blanco y negrita.
+Paleta actual: hero y footer negros; halo azul hielo ampliado detrás del PNG; página `#f4f5f7`, tarjetas blancas, zona de imagen negra y texto oscuro. Los enlaces principales aumentan hasta 448 × 128 píxeles en escritorio y se adaptan en móvil. Actualización, reintento y estrellas comparten el acabado facetado mediante `--acabado-diamante`. La fuente Burbank se usa en la interfaz y Garet Heavy en descripción y footer. Las secciones se separan con 72 píxeles de margen inferior.
+
+En favoritos se ocultan la fecha y el resumen generales. Una sola cabecera muestra «Favoritos del día (fecha de la tienda en UTC)», el texto explicativo solicitado y el recuento específico de elementos guardados. La fecha corresponde a la respuesta cargada y no al reloj del equipo. Los identificadores, la caducidad y el formato de localStorage se mantienen.
 
 El relleno del SVG y `--fondo-cabecera` son negros y deben mantenerse iguales si se modifica ese color. El SVG nuevo tiene el mismo trazado que el anterior, por lo que se adapta su presentación. No se cambian la consulta, los datos ni la lógica de favoritos en este bloque.

@@ -33,3 +33,16 @@ Apuntes técnicos para que el alumno valore, sin redactar su reflexión final:
 ## Redacción final
 
 Pendiente del alumno al terminar la misión.
+
+## Preguntas para empezar a redactar · 2026-10-17
+
+Elegir los temas que el alumno pueda explicar con su experiencia. Estas preguntas son una guía; no constituyen su reflexión final ni establecen un número obligatorio de apartados.
+
+1. **Favoritos diarios o conservados entre tiendas.** ¿Qué utilidad buscabas? ¿Por qué elegiste guardar fecha e identificadores? ¿Qué información adicional necesitarías para mostrar una oferta que ya no llega en la tienda actual? ¿Aceptas perder la selección al cargar otra rotación?
+2. **Una tarjeta por oferta o por objeto del lote.** ¿Qué representa el precio recibido? ¿Qué confusión produciría repetir ese precio en cada componente? ¿Qué detalle de los lotes deja fuera la solución actual?
+3. **Un solo JavaScript o módulos con responsabilidades.** ¿Qué no entendías del recorrido inicial? ¿Cómo te ayuda separar petición, transformación y renderizado? ¿Qué cambias en cada archivo? ¿Qué dificultad añaden las importaciones y el formato de datos que se pasan las funciones?
+4. **Reiniciar según la API o según el reloj del ordenador.** ¿Por qué usar el día UTC de la tienda? ¿Por qué esperar a recibir una respuesta válida? ¿Qué ocurre si la pestaña permanece abierta sin actualizar o si falla la red?
+
+Para cada tema seleccionado, explicar el problema, la decisión, una alternativa y el coste de la elección. Añadir un ejemplo del código o de lo observado al probar la web. No inventar errores que no hayan ocurrido ni atribuir al alumno implementaciones o comprobaciones realizadas por la IA.
+
+La persistencia de favoritos y la caché de respuestas son objetivos diferentes. La caché del bonus sigue sin implementarse; no presentar su funcionamiento o sus ventajas como trabajo ya realizado.

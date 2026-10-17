@@ -17,7 +17,7 @@ let estrellasHabilitadas = false;
 
 function actualizarEstrella(boton) {
   const seleccionado = seleccionFavoritos.has(boton.dataset.idOferta);
-  boton.textContent = seleccionado ? "★" : "☆";
+  boton.querySelector("span").textContent = seleccionado ? "★" : "☆";
   boton.setAttribute("aria-pressed", String(seleccionado));
   boton.setAttribute("aria-label", `${seleccionado ? "Quitar de" : "Añadir a"} favoritos: ${boton.dataset.nombreOferta}`);
   boton.title = boton.getAttribute("aria-label");
@@ -39,6 +39,8 @@ export function marcarVistaActiva(favoritosActivos) {
   enlaceTienda.removeAttribute("aria-current");
   enlaceFavoritos.removeAttribute("aria-current");
   (favoritosActivos ? enlaceFavoritos : enlaceTienda).setAttribute("aria-current", "page");
+  document.querySelector("#informacion-tienda").hidden = favoritosActivos;
+  document.querySelector(".barra-tienda").classList.toggle("en-favoritos", favoritosActivos);
 }
 
 export function mostrarCarga() {
@@ -76,7 +78,7 @@ function mostrarFecha(valor) {
 
   if (Number.isNaN(fechaRotacion.getTime())) {
     fecha.textContent = "día (fecha no disponible)";
-    return;
+    return "fecha no disponible";
   }
 
   // La API identifica cada rotación con una fecha UTC, independiente de la zona del visitante.
@@ -85,6 +87,7 @@ function mostrarFecha(valor) {
     timeZone: "UTC",
   }).format(fechaRotacion);
   fecha.dateTime = fechaRotacion.toISOString();
+  return fecha.textContent;
 }
 
 function mostrarImagenNoDisponible(contenedor) {
@@ -148,6 +151,9 @@ function crearTarjeta(oferta) {
   estrella.type = "button";
   estrella.dataset.idOferta = oferta.id;
   estrella.dataset.nombreOferta = oferta.nombre;
+  const simboloEstrella = document.createElement("span");
+  simboloEstrella.setAttribute("aria-hidden", "true");
+  estrella.append(simboloEstrella);
   actualizarEstrella(estrella);
 
   const contenido = document.createElement("div");
@@ -237,8 +243,9 @@ export function mostrarFavoritos(tienda) {
   resultados.hidden = true;
   aviso.hidden = true;
   vistaFavoritos.hidden = false;
-  mostrarFecha(tienda.fecha);
-  resumen.textContent = `${tienda.total} ${tienda.total === 1 ? "favorito" : "favoritos"} en esta rotación`;
+  const dia = mostrarFecha(tienda.fecha);
+  document.querySelector("#titulo-favoritos").textContent = `Favoritos del día (${dia})`;
+  document.querySelector("#resumen-favoritos").textContent = `Entre todas las secciones hoy has guardado ${tienda.total} ${tienda.total === 1 ? "elemento" : "elementos"} a favoritos.`;
   document.querySelector("#sin-favoritos").hidden = tienda.total > 0;
   listaFavoritos.append(...tienda.secciones.map(crearSeccion));
 

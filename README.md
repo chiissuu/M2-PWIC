@@ -7,7 +7,7 @@ Web Development I, the Client · U-tad.
 
 Aplicación desarrollada con HTML, CSS, JavaScript y Vite que consulta la tienda actual de Fortnite y organiza sus ofertas por secciones. Cada tarjeta muestra una imagen, el nombre, el tipo y el precio en pavos; los lotes conservan una sola tarjeta y un único precio por oferta.
 
-La identidad visual utiliza el PNG de título, el separador SVG y la fuente Burbank aportados por el alumno. Hero negro con degradado rojo detrás del título, tienda y favoritos sobre gris muy claro y zonas de imagen negras. Los enlaces principales tienen acabado plateado con volumen y estados de interacción. La descripción y el footer conservan una tipografía de lectura; el footer es negro con atribución blanca en negrita. El título conserva un encabezado `h1` con texto alternativo y la onda es decorativa.
+La identidad visual utiliza el PNG de título, el separador SVG y las fuentes aportados por el alumno. Hero negro con un halo azul hielo amplio detrás del título, tienda y favoritos sobre gris muy claro y zonas de imagen negras. Burbank se utiliza en la interfaz y Garet Heavy en la descripción y el footer. Los enlaces principales son grandes y el acabado plateado con volumen se comparte con actualización, reintento y estrellas. El footer es negro con atribución blanca. El título conserva un encabezado `h1` con texto alternativo y la onda es decorativa.
 
 La página muestra la fecha de la rotación, el número de ofertas y enlaces para recorrer las secciones. Permite actualizar los datos y distingue carga, error y tienda vacía. Los datos proceden de [Fortnite-API](https://fortnite-api.com/), un servicio comunitario no oficial de Epic Games. La consulta utilizada no requiere cuenta ni API key.
 
@@ -67,6 +67,7 @@ Utiliza el servidor de Vite para ejecutar los módulos ES.
 | `js/vista.js` | Tarjetas, navegación, fechas, precios y estados de la interfaz. |
 | `assets/` | PNG original del título y SVG de onda aportados por el alumno. |
 | `assets/burbank-big-condensed-black.otf` | Fuente local utilizada en la tienda y los controles; se carga con `@font-face`. |
+| `assets/garet-heavy.ttf` | Fuente local de descripción y footer. |
 | `package.json` | Datos del proyecto, scripts y dependencia de Vite. |
 | `package-lock.json` | Versiones de las dependencias para instalaciones reproducibles. |
 | `.gitignore` | Exclusiones de dependencias instaladas, compilación y archivos locales. |
@@ -85,6 +86,7 @@ Utiliza el servidor de Vite para ejecutar los módulos ES.
 - Alternativas para imágenes fallidas, precios ausentes y fechas no válidas.
 - Diseño adaptable y controles utilizables mediante teclado.
 - Favoritos diarios con estrellas accesibles, contador y vista propia dentro de la aplicación.
+- Cabecera de favoritos con una sola fecha de tienda, explicación y recuento de elementos seleccionados; los metadatos generales solo aparecen en la tienda.
 - Persistencia en `localStorage`, validación de datos guardados y alternativa en memoria si falla el almacenamiento.
 
 Los requisitos y las funcionalidades por desarrollar se siguen en `docs/Pendientes.md`.
@@ -95,7 +97,7 @@ El funcionamiento del almacenamiento, su relación con cada módulo y los esquem
 
 ### Comprobación manual del alumno
 
-El alumno comprobó Node.js, npm, Vite y la plantilla previa en el navegador. Después confirma que la versión funcional de la tienda funciona correctamente y solicita repasar su código antes de continuar. Esta confirmación general no implica que haya repetido todas las pruebas detalladas del agente.
+El alumno comprobó Node.js, npm, Vite y la plantilla previa en el navegador. Después confirmó que la versión funcional de la tienda funciona correctamente y solicitó repasar su código antes de continuar. El 17 de octubre confirmó también que los favoritos se guardan en su sección y que la selección se reinicia al cambiar el día de la tienda. Estas confirmaciones no implican que haya repetido todas las pruebas detalladas del agente.
 
 ### Comprobaciones del agente o herramientas
 
@@ -115,22 +117,25 @@ El alumno comprobó Node.js, npm, Vite y la plantilla previa en el navegador. De
 - Capturas de favoritos revisadas en escritorio y móvil; sin desbordamiento en 1440, 1024, 801, 800, 480, 390 y 320 píxeles CSS.
 - Diseño oscuro: recursos cargados, descripción solicitada, PNG original sin modificaciones y zona de imágenes negra; capturas revisadas y nueve anchos entre 320 y 1920 píxeles sin desbordamientos ni solapamientos entre título y navegación. Contraste de los seis pares de texto/fondo comprobados superior a 4,5:1. Estados de carga, error y vacío, y favoritos con recarga y teclado comprobados.
 - Revisión posterior de diseño: fuente local cargada y excepciones de descripción y footer confirmadas; hero negro y rojo, fondos claros, imágenes negras y footer de ancho completo. Nueve anchos sin desbordamiento ni solapamiento de título y navegación; hover, movimiento reducido, favoritos con recarga y teclado y seis pares de contraste superiores a 4,5:1. Capturas de hero, tienda, favoritos y footer inspeccionadas.
+- Retoques posteriores: Garet cargada en descripción y footer, botones ampliados y acabado compartido comprobados; cabecera de favoritos con recuentos 0/1/2, fecha inválida, error y reintento. Recarga, teclado y retorno a tienda correctos; nueve anchos sin desbordamientos ni solapamientos de título y navegación.
 
 Las pruebas de interfaz se ejecutaron en Chromium sin interfaz visible y se inspeccionaron capturas de escritorio y móvil. Son comprobaciones del agente; no sustituyen la revisión personal del alumno. No se han incorporado herramientas de pruebas como dependencias del proyecto ni se han guardado pruebas auxiliares en el repositorio.
 
 ## Uso de IA
 
-El alumno proporcionó el enunciado, la rúbrica y la teoría, y solicitó una plantilla inicial con documentación de seguimiento. Codex ayudó a preparar los archivos base, la configuración de Vite y los documentos Markdown.
+Para esta segunda misión he utilizado ChatGPT a través de Codex como ayuda para investigar APIs, desarrollar la aplicación y estudiar los conceptos nuevos. Mantengo la metodología de M1: trabajar por fases, revisar el resultado y preguntar por el código que necesito comprender antes de continuar. En esta misión no había trabajado antes con APIs, por lo que pedí explicar el recorrido completo desde la petición hasta las tarjetas de la tienda.
 
-El alumno propuso Spotify y Fortnite como posibles temáticas y decidió comenzar mostrando únicamente la tienda de Fortnite organizada. Codex ayudó a investigar las APIs, a implementar la consulta y los módulos de datos y vista, y a comprobar casos de error y adaptación a móvil.
+**Trabajo propio y asistido:** he aportado el enunciado y la rúbrica, las propuestas de temática, la elección de una tienda de Fortnite organizada y la decisión de guardar favoritos diarios. También he proporcionado el título gráfico, los separadores, las fuentes y los textos, y he dirigido los cambios de diseño mediante indicaciones y capturas. Realizo mis comprobaciones manuales y ejecuto los comandos de Git y GitHub.
 
-Después de comparar favoritos diarios y conservados entre rotaciones, el alumno eligió la opción diaria y solicitó implementarla. Codex ayudó a crear el módulo de almacenamiento, las estrellas, la navegación entre vistas y las comprobaciones de persistencia y errores. La revisión personal del alumno de este nuevo bloque sigue pendiente.
+Codex generó la plantilla y participó en la implementación de la petición a la API, la normalización y agrupación de datos, los módulos ES, el renderizado del DOM y la gestión de carga, errores y respuestas vacías. También implementó el almacenamiento de favoritos, las estrellas y la navegación entre vistas, integró los recursos gráficos y desarrolló los estilos y la adaptación a pantallas pequeñas. Además, preparó comentarios, apuntes de estudio y comprobaciones de sintaxis, compilación y navegador. La asistencia incluye generación de código y documentación, además de explicaciones.
 
-El alumno aportó después el PNG del título y el SVG de onda, redactó la nueva descripción y solicitó el fondo oscuro y las imágenes sobre negro. Codex ayudó a integrar los recursos y ajustar HTML, colores, composición y adaptación móvil. Las comprobaciones del diseño las realizó el agente; falta su revisión personal por el alumno.
+He confirmado manualmente el funcionamiento de la tienda y de los favoritos, incluido el reinicio al cambiar el día de la tienda. Las comprobaciones detalladas realizadas con herramientas se identifican por separado en este README. La Autopsia final queda pendiente de mi propia redacción.
 
-En una revisión posterior, el alumno aportó la fuente y otro archivo SVG y pidió probar hero negro con rojo, tienda clara, botones mayores y footer simplificado. Codex integró una sola copia de las dos fuentes idénticas, ajustó el diseño y preparó explicaciones de localStorage y de los estados visuales de los botones.
+### Metodología y seguimiento
 
-El alumno aporta las decisiones de alcance y gestiona Git y GitHub. El registro de asistencia, aportaciones propias y verificaciones se mantiene en `docs/Uso-IA.md`.
+El trabajo se ha dividido en bloques: plantilla con Vite, elección de API y tienda organizada, repaso del flujo, favoritos diarios y ajustes visuales. Durante el desarrollo he preguntado por `fetch`, `async/await`, JSON, módulos, métodos de array, creación de elementos del DOM y persistencia. Los documentos de estudio permiten repasar las explicaciones y preparar cambios posteriores.
+
+`docs/` contiene apuntes de aprendizaje, contexto y seguimiento utilizados como bóveda de Obsidian. Es documentación interna: no forma parte del funcionamiento de la aplicación ni pretende acreditar su calidad. Para instalar y utilizar la web no es necesario consultar esa carpeta; este README reúne la documentación pública y la declaración de IA. El registro de asistencia se conserva en `docs/Uso-IA.md`.
 
 ### Preguntas y decisiones del desarrollo
 
@@ -142,6 +147,8 @@ El alumno aporta las decisiones de alcance y gestiona Git y GitHub. El registro 
 - Se mantiene una tarjeta por oferta para conservar el precio de los lotes y se separan datos, petición y DOM para facilitar el aprendizaje y la futura reconstrucción con React.
 - El alumno pidió entender el recorrido completo antes de ampliar la aplicación; se preparó una explicación de la consulta HTTP, JSON, asincronía, transformación de arrays y construcción del DOM en `docs/Estudio.md`.
 - Durante el repaso preguntó si Vite interpreta el JSON y cómo se crean las tarjetas desde JavaScript. Se aclararon las responsabilidades del navegador y se preparó `docs/UsosMapFilterReduce.md` con parámetros, retornos y usos reales de los métodos de array.
+- Se compararon favoritos diarios y persistentes entre tiendas, y el alumno eligió la opción diaria con fecha e identificadores en `localStorage`.
+- Se aclaró que persistir favoritos no implementa la caché de respuestas del bonus: la carga y la actualización siguen consultando la API.
 
 ## Autopsia
 

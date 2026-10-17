@@ -85,3 +85,11 @@ Registrar aquí elecciones que afecten a la estructura, el funcionamiento o la d
 **Footer:** a petición del alumno, solo la atribución a Fortnite-API, en blanco y negrita sobre negro a todo el ancho, sin línea divisoria.
 
 **Alternativa reemplazada:** hero azul petróleo y fondo oscuro de la revisión anterior. Es una prueba visual solicitada; el PNG original y la lógica de favoritos se conservan.
+
+## Pulido del diseño y cabecera de favoritos
+
+**Petición del alumno:** sustituir el rojo aislado por un color coherente con el PNG y ampliar su halo; añadir Garet Heavy, aumentar botones, compartir su acabado y espaciar un poco más las secciones.
+
+**Implementación:** halo azul hielo detrás del título mediante un pseudo-elemento ampliado; Garet local en descripción y footer; controles con un degradado compartido y estrellas con símbolo recto dentro de una silueta inclinada. Se conservan estados accesibles y movimiento reducido.
+
+**Favoritos:** retirar fecha/resumen generales de esa vista y mostrar una cabecera propia con explicación y recuento. Se utiliza el día UTC de la tienda cargada para no atribuir ofertas de una fecha a otra si la respuesta está atrasada. No se cambia el almacenamiento ni se implementa caducidad por reloj local.

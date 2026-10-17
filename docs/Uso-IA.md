@@ -85,6 +85,21 @@ Este registro servirá para redactar la declaración pública del README a parti
 - **Comprobaciones del agente:** compilación y carga de fuente, tipografías excluidas, colores y contenido de footer, hover y movimiento reducido, nueve anchos sin desbordamiento ni solapamiento de título y navegación, seis pares de contraste superiores a 4,5:1 y favoritos con persistencia y teclado. Capturas de hero, tienda, favoritos y footer inspeccionadas.
 - **Alcance:** presentación y documentación; no se cambia la lógica de favoritos ni se añaden dependencias npm. Pendientes la valoración personal del alumno sobre esta prueba visual y su commit/push.
 
+## 2026-10-16 · Pulido visual y cabecera de favoritos
+
+- **Aportación del alumno:** confirma el commit anterior y valora positivamente el diseño. Aporta Garet Heavy y capturas con tamaños y separación deseados; redacta los textos de favoritos.
+- **Ayuda de IA:** integración de la fuente, halo azul hielo más amplio, botones mayores y acabado compartido, margen de secciones y adaptación de la vista de favoritos para una sola fecha y recuento.
+- **Comprobaciones del agente:** sintaxis y compilación; fuentes, hover, teclado, recarga y retorno a tienda; recuentos 0/1/2, fecha de API, fecha inválida, error y reintento; nueve anchos y capturas de escritorio y móvil. Detalle en `Sesiones/2026-10-16-Pulido-y-cabecera-favoritos.md`.
+- **Alcance:** presentación, cambios pequeños de vista y documentación. No se cambia el formato de localStorage ni se añaden dependencias. Pendiente de revisión y commit/push del alumno.
+
+## 2026-10-17 · Declaración pública y preparación de la Autopsia
+
+- **Petición del alumno:** comandos de commit y push, aclaración sobre el bonus de caché, propuestas para redactar su Autopsia y declaración de IA siguiendo M1.
+- **Confirmación propia:** indica que los favoritos se guardan en su sección y se reinician al cambiar el día de tienda. No se le atribuye la ejecución de pruebas detalladas adicionales.
+- **Ayuda de IA:** lectura del README de M1 y del código actual; adaptación de la declaración pública con las aportaciones reales y la metodología, explicación de la diferencia entre favoritos y caché y preguntas sobre decisiones técnicas para la reflexión del alumno.
+- **Documentación interna:** se describe `docs/` como apuntes y seguimiento de Obsidian. La instalación, el funcionamiento y la declaración pública se mantienen en README.
+- **Alcance:** documentación; no se implementa caché ni se cambian código, dependencias o configuración. La Autopsia final sigue pendiente de redacción literal del alumno. No se repiten pruebas funcionales de navegador para estos cambios de texto.
+
 ## Registro de los siguientes bloques
 
 Anotar fecha, petición concreta, aportación del alumno, ayuda recibida, dudas reales, correcciones y comprobaciones. No atribuir al alumno revisiones que todavía no haya confirmado.

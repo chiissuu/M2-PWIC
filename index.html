@@ -26,18 +26,18 @@
 
     <main id="contenido" tabindex="-1">
       <div class="barra-tienda">
-        <div>
+        <div id="informacion-tienda">
           <p class="fecha-rotacion">Rotación del <time id="fecha">día</time></p>
           <p id="resumen" class="resumen" role="status"></p>
         </div>
-        <button id="actualizar" class="boton" type="button">Actualizar tienda</button>
+        <button id="actualizar" class="boton" type="button"><span>Actualizar tienda</span></button>
       </div>
 
       <p id="aviso-favoritos" class="aviso-almacenamiento" role="status" hidden></p>
 
       <div id="aviso" class="aviso">
         <p id="estado" role="status">Cargando la tienda…</p>
-        <button id="reintentar" class="boton" type="button" hidden>Volver a intentar</button>
+        <button id="reintentar" class="boton" type="button" hidden><span>Volver a intentar</span></button>
       </div>
 
       <div id="resultados" class="distribucion" hidden>
@@ -49,9 +49,10 @@
       </div>
 
       <section id="favoritos" aria-labelledby="titulo-favoritos" hidden>
-        <h2 id="titulo-favoritos" tabindex="-1">Favoritos de esta rotación</h2>
-        <p class="explicacion-favoritos">Tu selección se reinicia cuando cargamos una nueva rotación de la tienda.</p>
-        <p id="sin-favoritos" class="aviso" hidden>No tienes favoritos en esta rotación. Marca la estrella de una oferta en la tienda para añadirla.</p>
+        <h2 id="titulo-favoritos" tabindex="-1">Favoritos del día</h2>
+        <p class="explicacion-favoritos">Aquí se guardan los objetos favoritos del día de hoy, cuando se actualiza una nueva tienda se eliminan permanentemente.</p>
+        <p id="resumen-favoritos" class="resumen-favoritos" role="status"></p>
+        <p id="sin-favoritos" class="aviso" hidden>No tienes favoritos guardados hoy. Marca la estrella de una oferta en la tienda para añadirla.</p>
         <div id="lista-favoritos"></div>
       </section>
 

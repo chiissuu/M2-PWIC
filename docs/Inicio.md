@@ -18,5 +18,6 @@ Documentación de aprendizaje y seguimiento de la segunda misión, consultable c
 - [[Sesiones/2026-10-16-Favoritos-diarios]]: selección por estrellas, almacenamiento diario y pruebas de persistencia.
 - [[Sesiones/2026-10-16-Diseno-oscuro]]: título PNG, separador SVG, paleta oscura y comprobaciones visuales.
 - [[Sesiones/2026-10-16-Tipografia-hero-y-botones]]: fuente local, hero negro y rojo, tienda clara, botones facetados y guía de almacenamiento.
+- [[Sesiones/2026-10-16-Pulido-y-cabecera-favoritos]]: Garet, halo azul hielo, controles compartidos y textos de favoritos.
 
 El README presenta el proyecto a una persona que no conoce su desarrollo. Esta carpeta conserva el proceso de aprendizaje.

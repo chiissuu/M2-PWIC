@@ -2,7 +2,7 @@
 
 ## Prioridad actual
 
-El alumno solicita una guía independiente de localStorage y probar fuente Fortnite, hero negro con rojo, tienda clara, botones facetados y footer simplificado. Está implementado y comprobado por el agente; falta su revisión y el commit/push del avance visual, que todavía parte del commit de favoritos. La caché de respuestas sigue pendiente.
+Los retoques de Garet, halo azul hielo, controles plateados, separación de secciones y cabecera de favoritos están implementados y comprobados por el agente. El 17 de octubre el alumno confirma el guardado de favoritos y su reinicio al cambiar el día de tienda. Se adapta la declaración de IA del README siguiendo la estructura de M1 y se preparan preguntas para que el alumno redacte su Autopsia. Siguen pendientes el commit/push de los retoques, la reflexión final y decidir si se implementa el bonus de caché de respuestas.
 
 ## Plantilla
 
@@ -36,10 +36,12 @@ El alumno solicita una guía independiente de localStorage y probar fuente Fortn
 - [x] Añadir comentarios breves al endpoint, al primer import, a `type="module"` y a la consulta asíncrona.
 - [ ] Resolver las dudas restantes y confirmar con el alumno que puede seguir el flujo y aplicar cambios por su cuenta.
 - [x] Realizar el commit de la primera tienda: `16fd4c2` comprobado en `main` local.
-- [ ] Revisar personalmente las estrellas, el contador y la vista de favoritos diarios.
+- [x] Recibir la confirmación del alumno de que se guardan los favoritos en su vista y se reinician al cambiar el día de la tienda.
 - [x] Realizar el commit de favoritos: `0eaef51` comprobado en `main` local.
-- [ ] Realizar el commit y push del nuevo diseño después de revisarlo.
+- [x] Realizar el commit del diseño anterior: `c88e8d9` comprobado en `main` local.
+- [ ] Realizar el commit y push de los retoques después de revisarlos.
 - [ ] Valorar e implementar el bonus de caché después del funcionamiento principal.
+- [x] Adaptar la declaración de IA a M2 siguiendo el formato de M1 y describir el propósito interno de `docs/`.
 - [ ] Cerrar README, declaración de IA y Autopsia con el trabajo realmente realizado.
 - [ ] Revisar la entrega frente al enunciado y la rúbrica.
 
@@ -82,4 +84,14 @@ No hay bloqueos técnicos conocidos en este bloque. La siguiente referencia es l
 - [x] Simplificar y ampliar el footer negro a todo el ancho con atribución blanca en negrita.
 - [x] Comprobar compilación, carga de fuente, excepciones tipográficas, contraste, hover y movimiento reducido.
 - [x] Comprobar nueve anchos, favoritos persistentes y teclado; inspeccionar capturas de hero, tienda, favoritos y footer.
-- [ ] Recibir la valoración del alumno sobre esta prueba visual antes de considerar cerrado el diseño.
+- [x] Recibir la valoración positiva del alumno y su confirmación de commit del avance visual.
+
+## Retoques de Garet, controles y favoritos
+
+- [x] Cargar Garet Heavy en descripción y footer y ampliar el halo azul hielo.
+- [x] Ampliar botones del hero y compartir el acabado plateado con actualización, reintento y estrellas.
+- [x] Aumentar ligeramente la separación entre secciones.
+- [x] Mostrar una cabecera propia de favoritos con una sola fecha, explicación y recuento dinámico.
+- [x] Comprobar sintaxis, compilación, fuentes, hover, nueve anchos, persistencia y teclado.
+- [x] Comprobar recuentos 0/1/2, fecha inválida, error, reintento y retorno a la tienda.
+- [ ] Confirmar personalmente los nuevos retoques en el navegador.
