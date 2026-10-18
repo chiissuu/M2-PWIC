@@ -8,7 +8,7 @@
 - Repositorio: <https://github.com/chiissuu/M2-PWIC>.
 - Carpeta: `M2-PWIC`, dentro de la carpeta global `PWIC`, junto a `aim-trainer`.
 - Proyecto: Fortnite Daily Shop!, identidad de título aportada por el alumno; inicialmente denominado Tienda de Fortnite.
-- Estado: avance visual anterior confirmado por el alumno y guardado en `c88e8d9`, comprobado en `main` local. Retoques con Garet, halo azul hielo y nueva cabecera de favoritos implementados y comprobados por el agente; pendientes de revisión y commit del alumno.
+- Estado: tienda, favoritos diarios y retoques visuales implementados. El 18 de octubre el alumno entrega las dos autopsias finales y se incorporan al README. El siguiente paso acordado es su commit/push y posterior contraste del repositorio con la rúbrica. La caché del bonus sigue sin implementarse.
 
 ## Objetivo y rúbrica
 
@@ -73,7 +73,7 @@ Después de valorar el acceso de terceros, se priorizan recursos gratuitos sin c
 
 ## Método de trabajo
 
-El 17 de octubre el alumno confirma el guardado y el reinicio diario de favoritos. Se prepara la declaración de IA del README siguiendo M1 y se proponen temas para su Autopsia, cuya redacción final sigue siendo suya. La caché de respuestas del bonus es independiente del almacenamiento de favoritos y todavía no está implementada. El siguiente cierre es el commit/push del alumno y la entrega de su reflexión; la evaluación del repositorio queda para cuando la solicite después.
+El 17 de octubre el alumno confirma el guardado y el reinicio diario de favoritos. Se prepara la declaración de IA del README siguiendo M1 y se proponen temas para su Autopsia. El 18 de octubre entrega su redacción final sobre favoritos y lotes y pide incorporarla sin más cambios. La caché de respuestas del bonus es independiente del almacenamiento de favoritos y todavía no está implementada. El siguiente cierre es el commit/push del alumno; la evaluación del repositorio queda para cuando la solicite después.
 
 Desarrollar bloques pequeños, comprobarlos y explicar los conceptos desconocidos antes de cerrar cada avance. El alumno gestiona los commits y los pushes. Registrar únicamente pruebas realizadas y conservar literalmente su redacción final de la Autopsia.
 

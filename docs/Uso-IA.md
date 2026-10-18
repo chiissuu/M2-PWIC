@@ -100,6 +100,14 @@ Este registro servirá para redactar la declaración pública del README a parti
 - **Documentación interna:** se describe `docs/` como apuntes y seguimiento de Obsidian. La instalación, el funcionamiento y la declaración pública se mantienen en README.
 - **Alcance:** documentación; no se implementa caché ni se cambian código, dependencias o configuración. La Autopsia final sigue pendiente de redacción literal del alumno. No se repiten pruebas funcionales de navegador para estos cambios de texto.
 
+## 2026-10-18 · Incorporación de las autopsias del alumno
+
+- **Aportación del alumno:** elige favoritos diarios y lotes como temas, redacta sus reflexiones a partir de prototipos y aclaraciones y entrega el texto que desea publicar.
+- **Ayuda de IA:** borradores breves siguiendo el estilo de M1, explicación de una decisión y contraste de imprecisiones con el código. Tras su revisión, el alumno pide incorporar su última versión.
+- **Cambios:** incorporación de esa versión al README y al documento de Autopsia, adaptación de encabezados Markdown y actualización del seguimiento y de la declaración de IA. No se reescribe la reflexión recibida.
+- **Comprobaciones:** correspondencia del texto incorporado y formato del diff; no se ejecutan nuevas pruebas funcionales porque solo se modifica documentación.
+- **Siguiente paso acordado:** commit y push ejecutados por el alumno y posterior revisión frente a la rúbrica cuando comparta el repositorio.
+
 ## Registro de los siguientes bloques
 
 Anotar fecha, petición concreta, aportación del alumno, ayuda recibida, dudas reales, correcciones y comprobaciones. No atribuir al alumno revisiones que todavía no haya confirmado.

@@ -2,7 +2,7 @@
 
 ## Prioridad actual
 
-Los retoques de Garet, halo azul hielo, controles plateados, separación de secciones y cabecera de favoritos están implementados y comprobados por el agente. El 17 de octubre el alumno confirma el guardado de favoritos y su reinicio al cambiar el día de tienda. Se adapta la declaración de IA del README siguiendo la estructura de M1 y se preparan preguntas para que el alumno redacte su Autopsia. Siguen pendientes el commit/push de los retoques, la reflexión final y decidir si se implementa el bonus de caché de respuestas.
+El 18 de octubre el alumno entrega sus dos autopsias y solicita incorporarlas al README. Se conserva su redacción y se actualiza la declaración de IA para reflejar la asistencia con borradores y aclaraciones. El siguiente paso acordado es que el alumno haga commit y push y comparta el repositorio para contrastar la entrega con la rúbrica. La caché de respuestas sigue siendo un bonus opcional sin implementar.
 
 ## Plantilla
 
@@ -42,6 +42,7 @@ Los retoques de Garet, halo azul hielo, controles plateados, separación de secc
 - [ ] Realizar el commit y push de los retoques después de revisarlos.
 - [ ] Valorar e implementar el bonus de caché después del funcionamiento principal.
 - [x] Adaptar la declaración de IA a M2 siguiendo el formato de M1 y describir el propósito interno de `docs/`.
+- [x] Incorporar al README las dos autopsias entregadas por el alumno, conservando su redacción.
 - [ ] Cerrar README, declaración de IA y Autopsia con el trabajo realmente realizado.
 - [ ] Revisar la entrega frente al enunciado y la rúbrica.
 

@@ -1,6 +1,6 @@
 # Preparación de la Autopsia
 
-La Autopsia final será redactada por el alumno y se conservará exactamente como la entregue, salvo que solicite expresamente una modificación.
+El alumno entregó la redacción final el 18 de octubre de 2026 y pidió incorporarla al README. Se conserva su texto sin reescritura; los encabezados se adaptan al formato Markdown.
 
 ## Decisiones que se pueden recoger durante el desarrollo
 
@@ -11,7 +11,7 @@ Para cada posible reflexión, registrar:
 3. Alternativa real descartada.
 4. Coste o limitación de la elección.
 
-Todavía no se han seleccionado los temas de la Autopsia. La elección de API, las transformaciones de datos, la separación de módulos o la caché podrían dar lugar a reflexiones si durante su implementación aparece una decisión relevante.
+Los temas elegidos por el alumno son favoritos diarios frente a permanentes y representación de lotes. Los candidatos siguientes se conservan como seguimiento del proceso.
 
 ## Candidatos surgidos en la primera tienda
 
@@ -32,7 +32,25 @@ Apuntes técnicos para que el alumno valore, sin redactar su reflexión final:
 
 ## Redacción final
 
-Pendiente del alumno al terminar la misión.
+### Autopsia 1. Objetos favoritos diarios o permanentes en su sección.
+
+Para añadir una funcionalidad de local storage, se me ocurrió la de añadir un apartado de favoritos para guardar los objetos de la tienda que quieras guardar. Pero se planteaban dos opciones de implementación para esto. La primera de ellas era conservar los objetos seleccionados para siempre o que se guarden solo los de la tienda actual.
+
+Finalmente, decidí elegir la opción de que se guarden solo los objetos guardados de la tienda actual. Esta decisión se debe a que la página se centra en enseñar los objetos de la tienda diarios, y no tendría sentido guardar objetos que ya no estén disponibles en la tienda actual.
+
+También por el hecho de que en localStorage con la decisión elegida se guardan los id’s de los objetos y la fecha de la tienda. Y para conservar de un día a otro los objetos en la página web, necesitamos la respuesta API de ella, si al día siguiente ese objeto ya no está en la tienda, se perdería.
+
+El coste que tiene esta decisión respecto a la otra es que no puedes guardar objetos en el apartado de favoritos que quieras tener en un futuro y que ahora no te puedes comprar. He aceptado esta limitación, ya que la página solo se centra en la tienda diaria y perdería lógica si te pudieras guardar cosas que ya no existen en ella.
+
+### Autopsia 2. Lotes de objetos
+
+Cuando había que organizar los datos que venían de la API, se tenía que decidir cómo se mostraban los lotes que mostraban varios objetos.
+
+Se pensó una primera opción, que era separar estos componentes de los lotes en tarjetas individuales, el problema estaba en que el precio que se recibía era el conjunto del lote y tenía un precio diferente en lote a como era la suma de los objetos separados.
+
+Por este problema, se decidió finalmente mostrar cada lote en una sola vista entera. Así se evita confundir el precio del lote con el de cada objeto por separado y también se simplifica la forma en la que se muestran los datos en la pagina y para el usuario.
+
+La limitación es que la vista de los lotes no muestra el detalle de todos los componentes internos. En una futura versión de este Fortnite Daily Shop se podría añadir una vista ampliada que los enseñase, y que además te muestre el precio que te descuentas comprando el lote frente a los objetos de forma individual.
 
 ## Preguntas para empezar a redactar · 2026-10-17
 
