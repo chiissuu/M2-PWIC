@@ -2,6 +2,18 @@
 
 Registrar aquí elecciones que afecten a la estructura, el funcionamiento o la defensa. Para cada una, indicar motivo y alternativa descartada.
 
+## Caché de respuestas · 2026-10-18
+
+**Decisión autorizada por el alumno:** conservar la respuesta de tienda tres horas y caducarla al cambiar el día UTC. El día de la respuesta también debe coincidir con el actual. La actualización manual permite forzar red con un minuto entre intentos, incluidos los fallidos.
+
+**Responsabilidades:** `js/cache.js` gestiona las claves de copia y última consulta; `js/api.js` decide reutilizar o pedir datos y devuelve su procedencia; `app.js` prepara y coordina; `js/vista.js` muestra estado y hora. No se añaden dependencias ni se cambia el formato de favoritos.
+
+**Motivo:** reducir consultas al recargar sin conservar durante seis o nueve horas cambios extraordinarios. La hora UTC evita depender de cambios de horario en España. La validez se comprueba cuando se solicita la tienda; no se programan consultas en segundo plano.
+
+**Errores:** no sobrescribir copias con respuestas fallidas. Una actualización manual fallida puede seguir mostrando la copia si todavía está vigente; una caducada no se presenta como actual. La fecha inválida se sigue mostrando con sus alternativas, pero no sustituye la caché. Si falla localStorage, se continúa en memoria con aviso.
+
+**Límite aceptado:** pueden pasar hasta tres horas sin detectar cambios dentro de un día, salvo actualización manual. El minuto es un control local del navegador, no un límite global del proveedor. Las pestañas comparten las marcas guardadas, pero no hay un bloqueo atómico entre pestañas simultáneas.
+
 ## Base con Vite y JavaScript
 
 **Decisión:** utilizar Vite con JavaScript y módulos ES. Vite será la única dependencia directa de esta plantilla y se instalará como dependencia de desarrollo.

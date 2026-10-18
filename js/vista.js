@@ -11,6 +11,7 @@ const vistaFavoritos = document.querySelector("#favoritos");
 const listaFavoritos = document.querySelector("#lista-favoritos");
 const totalFavoritos = document.querySelector("#total-favoritos");
 const avisoFavoritos = document.querySelector("#aviso-favoritos");
+const estadoCache = document.querySelector("#estado-cache");
 const formatoNumero = new Intl.NumberFormat("es-ES");
 let seleccionFavoritos = new Set();
 let estrellasHabilitadas = false;
@@ -44,6 +45,7 @@ export function marcarVistaActiva(favoritosActivos) {
 }
 
 export function mostrarCarga() {
+  estadoCache.hidden = true;
   botonActualizar.disabled = true;
   botonReintentar.hidden = true;
   resultados.hidden = true;
@@ -65,10 +67,19 @@ export function habilitarActualizacion() {
   botonActualizar.disabled = false;
 }
 
-export function mostrarError() {
+export function mostrarEstadoCache({ desdeCache, consultadaEn, aviso: mensaje }) {
+  const hora = new Intl.DateTimeFormat("es-ES", {
+    dateStyle: "short",
+    timeStyle: "medium",
+  }).format(new Date(consultadaEn));
+  estadoCache.textContent = `${desdeCache ? "Tienda recuperada del navegador" : "Tienda consultada en la API"}. Última consulta: ${hora}. ${mensaje}`.trim();
+  estadoCache.hidden = false;
+}
+
+export function mostrarError(mensaje = "Comprueba tu conexión y vuelve a intentarlo.") {
   aviso.classList.add("es-error");
   estado.setAttribute("role", "alert");
-  estado.textContent = "No se ha podido cargar la tienda. Comprueba tu conexión y vuelve a intentarlo.";
+  estado.textContent = `No se ha podido cargar la tienda. ${mensaje}`;
   resumen.textContent = "La tienda no está disponible en este momento.";
   botonReintentar.hidden = false;
 }

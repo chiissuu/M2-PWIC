@@ -29,7 +29,7 @@ Referencia: [guía oficial de Vite](https://vite.dev/guide/).
 ## Recorrido de la tienda
 
 1. `app.js` llama a `cargarTienda()` y muestra la carga.
-2. `obtenerTienda()` consulta la API, comprueba el estado HTTP y valida la lista recibida.
+2. `obtenerTienda()` reutiliza una copia vigente o llama a `consultarTienda()`, que consulta la API, comprueba el estado HTTP y valida la lista. Devuelve datos y procedencia.
 3. `prepararTienda()` convierte las entradas a un formato común y las agrupa.
 4. `mostrarTienda()` crea las tarjetas y los enlaces en el DOM.
 5. Si algo falla, `catch` muestra el error; `finally` permite volver a actualizar.
@@ -75,7 +75,7 @@ El proveedor comunitario Fortnite-API devuelve JSON: texto con una estructura de
 
 ### ¿Vite procesa el JSON que llega de la API?
 
-En esta aplicación lo interpreta el navegador mediante `respuesta.json()`, dentro de `obtenerTienda()`, en `js/api.js`. Vite sirve nuestros archivos durante el desarrollo y prepara los módulos para poder utilizarlos. El navegador ejecuta ese JavaScript, consulta por separado el servidor remoto e interpreta el JSON. Después, nuestro código decide qué propiedades conservar y cómo mostrarlas. No hemos creado un backend propio.
+En esta aplicación lo interpreta el navegador mediante `respuesta.json()`, dentro de `consultarTienda()`, en `js/api.js`. Vite sirve nuestros archivos durante el desarrollo y prepara los módulos para poder utilizarlos. El navegador ejecuta ese JavaScript, consulta por separado el servidor remoto e interpreta el JSON. Después, nuestro código decide qué propiedades conservar y cómo mostrarlas. No hemos creado un backend propio.
 
 ```text
 Vite → entrega nuestros archivos HTML, CSS y JavaScript al navegador
@@ -100,6 +100,7 @@ La carpeta `js/` es una decisión de organización, no un requisito del lenguaje
 | `index.html` | Estructura fija: cabecera, botones y contenedores. |
 | `app.js` | Coordina el funcionamiento general. |
 | `js/api.js` | Solicita los datos y comprueba la respuesta. |
+| `js/cache.js` | Guarda la respuesta, comprueba tres horas y día UTC y limita la actualización manual. |
 | `js/datos.js` | Simplifica y agrupa las ofertas. |
 | `js/favoritos.js` | Valida, conserva y guarda la selección de favoritos por rotación. |
 | `js/vista.js` | Convierte los datos preparados en elementos de la página. |
@@ -111,7 +112,7 @@ En el HTML, `type="module"` permite separar JavaScript en archivos que se import
 import { obtenerTienda } from "./js/api.js";
 ```
 
-Significa: «quiero utilizar aquí la función que exporta ese otro archivo». Importar permite utilizarla; no equivale a llamarla. La petición empieza cuando se ejecuta `obtenerTienda()`.
+Significa: «quiero utilizar aquí la función que exporta ese otro archivo». Importar permite utilizarla; no equivale a llamarla. `obtenerTienda()` empieza a resolver de dónde sacar los datos cuando se llama; con la caché vigente no inicia una petición.
 
 ### Recorrido desde que se abre la página
 
@@ -122,7 +123,7 @@ index.html carga app.js
           ↓
      mostrarCarga()
           ↓
-     obtenerTienda()       → pedir y comprobar datos
+     obtenerTienda()       → copia vigente o pedir y comprobar datos
           ↓
      prepararTienda()      → transformar y agrupar
           ↓
@@ -136,11 +137,11 @@ Al terminar, con éxito o error:
 ```
 
 1. El navegador analiza `index.html`, carga el CSS y ejecuta `app.js` como módulo mediante `type="module"`. Los módulos importados se preparan antes de ejecutar el código del módulo de entrada.
-2. `app.js` registra los eventos de los dos botones. Al escribir `addEventListener("click", cargarTienda)` se entrega una función para ejecutarla cuando llegue el clic; no se la llama en ese momento.
+2. `app.js` registra los eventos de los dos botones con `() => cargarTienda(true)`. Se entrega una función para ejecutarla cuando llegue el clic; no se la llama en ese momento. `true` identifica una actualización manual que puede saltarse la copia vigente, respetando el minuto de espera.
 3. La última línea, `cargarTienda()`, inicia la consulta inicial.
 4. `cargando` evita iniciar otra consulta mientras la anterior sigue en marcha. `mostrarCarga()` desactiva la actualización, oculta resultados, limpia tarjetas y enlaces antiguos y muestra el aviso de carga.
-5. `await obtenerTienda()` espera a los datos. La espera suspende la continuación de esta función asíncrona; el navegador puede seguir atendiendo otros trabajos.
-6. `prepararTienda(datos)` transforma la respuesta y devuelve la tienda preparada.
+5. `await obtenerTienda({ forzar })` espera a `{ datos, desdeCache, consultadaEn, aviso }`. La espera suspende la continuación de esta función asíncrona; el navegador puede seguir atendiendo otros trabajos.
+6. `prepararTienda(respuesta.datos)` transforma los datos y devuelve la tienda preparada. Los metadatos se muestran por separado con `mostrarEstadoCache(respuesta)`.
 7. `mostrarTienda(tienda)` construye las secciones, tarjetas y enlaces. Si el total es cero, muestra el mensaje de tienda vacía.
 8. Un fallo dentro del `try` lleva al `catch`: se registra el detalle en consola y se presenta un error con reintento. El `finally` libera `cargando` y habilita la actualización tanto si hubo éxito como si hubo error.
 
@@ -148,7 +149,7 @@ Los clics en actualizar y reintentar vuelven a ejecutar el mismo recorrido. La a
 
 ### Obtener los datos: `obtenerTienda()`
 
-Una función `async` devuelve una promesa: un resultado que puede completarse o fallar más adelante. En esta función hay dos esperas:
+Una función `async` devuelve una promesa: un resultado que puede completarse o fallar más adelante. Desde el bloque de caché, `obtenerTienda()` decide el origen; las dos esperas de red están dentro de `consultarTienda()`:
 
 | Elemento | Qué hace aquí |
 | --- | --- |
@@ -160,6 +161,7 @@ La espera no detiene toda la página: JavaScript deja pendiente la continuación
 
 ```js
 const respuesta = await fetch(URL_TIENDA, {
+  cache: "no-store",
   signal: AbortSignal.timeout(15000),
 });
 // Aquí se comprueba respuesta.ok.
@@ -170,7 +172,7 @@ La primera obtiene el objeto `Response`, que contiene información como el estad
 
 `fetch` puede rechazar su promesa por un problema de red, pero un HTTP 404 o 500 no provoca por sí solo ese rechazo. Por eso comprobamos `respuesta.ok` y lanzamos un `Error` si el estado HTTP no indica éxito. `throw` hace que la operación falle y el error llegue al `catch` de `app.js`.
 
-Después se comprueba que `contenido.data.entries` sea un array. Una lista vacía es una respuesta válida; una lista ausente o con un tipo distinto es un error de estructura. La función devuelve `contenido.data`, por lo que `datos.entries` ya es accesible desde el módulo de transformación.
+Después se comprueba que `contenido.data.entries` sea un array. Una lista vacía es una respuesta válida; una lista ausente o con un tipo distinto es un error de estructura. `consultarTienda()` devuelve `contenido.data`. `obtenerTienda()` guarda esos datos cuando tienen un formato válido para la caché y los acompaña de procedencia, hora y aviso; `app.js` entrega solo `respuesta.datos` al módulo de transformación. `cache: "no-store"` evita que la caché HTTP del navegador decida por nuestra copia de localStorage cuando sí solicitamos red.
 
 ### Transformar los datos: `prepararTienda()`
 
@@ -332,14 +334,14 @@ Para presentar otra propiedad de la API, primero se comprueba su nombre en la re
 
 Un futuro buscador debería reutilizar los datos ya descargados. Desde el bloque de favoritos, `app.js` conserva `tiendaActual` fuera de `cargarTienda`, y las funciones de vista reemplazan sus listas antes de pintarlas. Esa misma base permitirá filtrar sin perder la tienda completa. Llamar a `cargarTienda` en cada tecla repetiría consultas innecesarias.
 
-Los favoritos diarios sí tienen persistencia en `localStorage`. No hay todavía caché de respuestas: al volver a abrir o actualizar se ejecuta otra consulta, aunque el navegador pueda tener sus propias cachés HTTP. Se consulta la tienda de la rotación actual, no todo el catálogo histórico de Fortnite.
+Los favoritos diarios y la respuesta de tienda tienen persistencia en claves independientes de `localStorage`. Al volver a abrir se reutiliza una copia vigente durante tres horas y dentro del mismo día UTC. La actualización manual puede consultar antes, con un minuto entre intentos. Se consulta la tienda actual, no todo el catálogo histórico de Fortnite. El detalle está en [[cache]].
 
 ### Cómo observarlo por cuenta propia
 
 1. Arrancar `npm run dev` y abrir la página.
-2. Abrir las herramientas de desarrollo del navegador y su pestaña de red (`Network`); seleccionar `Fetch/XHR` y pulsar «Actualizar tienda».
+2. Abrir las herramientas de desarrollo del navegador y su pestaña de red (`Network`); seleccionar `Fetch/XHR` y pulsar «Actualizar tienda» después de un minuto desde la última consulta. Si hay caché vigente, recargar no debe añadir otra petición a la API.
 3. Abrir la petición `shop?language=es`: comprobar GET, estado HTTP y las pestañas de vista previa/respuesta. Buscar `data.entries` y reconocer precio, sección y artículos.
-4. En la pestaña de código (`Sources`), poner un punto de interrupción después de `await obtenerTienda()` para inspeccionar `datos`; avanzar sobre `prepararTienda(datos)` e inspeccionar `tienda`.
+4. En la pestaña de código (`Sources`), poner un punto de interrupción después de `await obtenerTienda({ forzar })` para inspeccionar `respuesta.datos` y sus metadatos; avanzar sobre `prepararTienda(respuesta.datos)` e inspeccionar `tiendaActual`.
 5. En elementos (`Elements`), localizar una tarjeta: existe en el DOM aunque no estuviera escrita en el HTML inicial.
 
 El alumno ha leído la explicación, confirma que la aplicación funciona correctamente y pide consolidar estos apuntes antes de hacer commit. Se ha corregido la distinción entre preparar datos y crear el DOM. El repaso continúa por puntos; esto no sustituye una comprobación práctica de que puede modificar todo el código por su cuenta.
@@ -464,7 +466,7 @@ Los accesos se protegen con `try/catch`. Ante bloqueo del navegador o falta de e
 4. En las herramientas de Chrome, abre `Application` → `Local Storage` → origen de la página y busca `m2-pwic:favoritos-diarios`.
 5. Examina el JSON: fecha, versión e identificadores. El cambio de rotación se ha probado con respuestas simuladas; no es necesario esperar al día siguiente para comprobar esa rama durante el desarrollo.
 
-La caché del bonus sigue pendiente: todavía no se evita la petición inicial ni la actualización manual a partir de una respuesta guardada.
+La caché se añadió después como bloque independiente: evita repetir la petición al recargar mientras la copia siga vigente y limita las consultas manuales. Véase [[cache]].
 
 ## Título de imagen, SVG y colores
 

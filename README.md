@@ -13,6 +13,8 @@ La página muestra la fecha de la rotación, el número de ofertas y enlaces par
 
 Cada oferta tiene una estrella para añadirla a favoritos de la rotación actual. La cabecera permite alternar entre tienda y favoritos sin volver a consultar la API. La selección se guarda en `localStorage` y se conserva al recargar durante la misma rotación; se reinicia al cargar una respuesta válida de otro día de rotación UTC.
 
+La respuesta de la tienda también se guarda en `localStorage`, en una clave independiente. Al abrir o recargar se reutiliza durante un máximo de tres horas, siempre que la consulta y la tienda correspondan al día UTC actual. «Actualizar tienda» permite consultar antes, con un minuto entre intentos de red. Un mensaje indica si se ha usado la API o la copia del navegador y cuándo se consultó.
+
 El proyecto practica peticiones asíncronas, transformación de arrays, módulos ES y renderizado del DOM. Los precios y la disponibilidad deben confirmarse dentro del juego.
 
 ## Cómo probarlo
@@ -29,14 +31,16 @@ npm run dev
 1. Abre la dirección que indique el terminal.
 2. Espera a que se cargue la tienda y comprueba la fecha de la rotación.
 3. Recorre las ofertas y utiliza los enlaces para saltar entre secciones.
-4. Pulsa «Actualizar tienda» y comprueba que las tarjetas se reemplazan.
-5. Para comprobar el error, activa el modo sin conexión en las herramientas de desarrollo del navegador y actualiza la tienda. Restablece la conexión y pulsa «Volver a intentar».
+4. Recarga y comprueba el mensaje «Tienda recuperada del navegador»: una copia vigente evita otra petición a `/v2/shop`. Pulsa «Actualizar tienda»: si no ha pasado un minuto desde la consulta, se mantiene la copia y aparece el tiempo de espera; después de un minuto se puede forzar otra consulta.
+5. Para comprobar el error sin que intervenga una copia vigente, elimina solo `m2-pwic:cache-tienda` en las herramientas de desarrollo. Espera un minuto desde la última consulta, activa el modo sin conexión y pulsa actualizar. Restablece la conexión y utiliza «Volver a intentar» cuando termine ese minuto de espera. No borres la clave de favoritos.
 6. Marca algunas estrellas y abre «Favoritos» en la cabecera. Comprueba las tarjetas seleccionadas y quita alguna pulsando su estrella.
 7. Recarga y verifica que la selección sigue disponible durante esa rotación. También puedes abrir directamente la dirección con `#favoritos`.
 
 Los favoritos pertenecen a este navegador y al origen de la página. Si el navegador impide guardarlos o agota la cuota, se muestra un aviso y la selección funciona en memoria mientras la página permanezca abierta. Una fecha de rotación inválida desactiva las estrellas sin borrar lo guardado; un error de consulta tampoco elimina la selección. No se comprueba automáticamente el cambio de tienda: se detecta al abrir o actualizar la página con éxito.
 
-Se guardan identificadores y fecha, no las imágenes ni una copia completa de la tienda. Esta funcionalidad todavía no implementa el bonus de caché: abrir o actualizar la página sigue consultando la API para confirmar la rotación.
+Los favoritos guardan identificadores y fecha. La caché guarda por separado el JSON de la tienda y la hora de consulta, no los archivos de imagen. Caduca a las tres horas o al cambiar el día UTC; una respuesta de tienda de otro día tampoco se reutiliza como vigente. No hay consultas programadas en segundo plano: se comprueba al cargar o al pulsar los controles.
+
+Si falla una actualización manual y aún hay una copia vigente, se muestra esa copia con un aviso. Una copia caducada no se presenta como tienda actual y los errores de red o de formato no sobrescriben lo guardado. Los intentos fallidos también cuentan para el minuto de espera. Si el navegador impide guardar la caché, la web continúa y reutiliza los datos en memoria durante esa página abierta, pero una recarga puede necesitar otra consulta.
 
 Para generar y servir la versión de producción:
 
@@ -61,7 +65,8 @@ Utiliza el servidor de Vite para ejecutar los módulos ES.
 | `index.html` | Estructura de la página y entrada al módulo JavaScript. |
 | `styles.css` | Estilos iniciales. |
 | `app.js` | Punto de entrada de la aplicación. |
-| `js/api.js` | Petición HTTP, límite de espera y validación de la respuesta. |
+| `js/api.js` | Decide entre caché y red; petición HTTP, límite de espera y validación de la respuesta. |
+| `js/cache.js` | Copia de la tienda, caducidad de tres horas y día UTC, y separación entre consultas manuales. |
 | `js/datos.js` | Normalización, filtrado de entradas inválidas y agrupación de ofertas. |
 | `js/favoritos.js` | Lectura, validación y guardado de favoritos por día de rotación. |
 | `js/vista.js` | Tarjetas, navegación, fechas, precios y estados de la interfaz. |
@@ -88,10 +93,13 @@ Utiliza el servidor de Vite para ejecutar los módulos ES.
 - Favoritos diarios con estrellas accesibles, contador y vista propia dentro de la aplicación.
 - Cabecera de favoritos con una sola fecha de tienda, explicación y recuento de elementos seleccionados; los metadatos generales solo aparecen en la tienda.
 - Persistencia en `localStorage`, validación de datos guardados y alternativa en memoria si falla el almacenamiento.
+- Caché de respuestas en `localStorage` para evitar peticiones repetidas al cargar; renovación por tiempo, día UTC o actualización manual limitada.
 
 Los requisitos y las funcionalidades por desarrollar se siguen en `docs/Pendientes.md`.
 
 El funcionamiento del almacenamiento, su relación con cada módulo y los esquemas de carga y selección se explican en [docs/localStorage.md](docs/localStorage.md). Los efectos de los botones y la carga de fuentes se explican en [docs/Estudio.md](docs/Estudio.md).
+
+El esquema de la caché, sus funciones y las comprobaciones prácticas se explican en [docs/cache.md](docs/cache.md).
 
 ## Comprobaciones realizadas
 
@@ -101,7 +109,7 @@ El alumno comprobó Node.js, npm, Vite y la plantilla previa en el navegador. De
 
 ### Comprobaciones del agente o herramientas
 
-- `node --check` sobre `app.js` y los cuatro módulos de `js/`: sintaxis correcta.
+- `node --check` sobre `app.js` y los módulos de `js/`: sintaxis correcta.
 - `npm run build`: compilación de producción correcta.
 - Chromium con la API real: 412 ofertas en 23 secciones en la rotación consultada el 16 de octubre de 2026; navegación y renderizado completos.
 - Comprobación de escritorio y móvil, sin desbordamiento horizontal en anchos de 1366, 800, 768, 481, 480, 390 y 320 píxeles CSS.
@@ -118,6 +126,7 @@ El alumno comprobó Node.js, npm, Vite y la plantilla previa en el navegador. De
 - Diseño oscuro: recursos cargados, descripción solicitada, PNG original sin modificaciones y zona de imágenes negra; capturas revisadas y nueve anchos entre 320 y 1920 píxeles sin desbordamientos ni solapamientos entre título y navegación. Contraste de los seis pares de texto/fondo comprobados superior a 4,5:1. Estados de carga, error y vacío, y favoritos con recarga y teclado comprobados.
 - Revisión posterior de diseño: fuente local cargada y excepciones de descripción y footer confirmadas; hero negro y rojo, fondos claros, imágenes negras y footer de ancho completo. Nueve anchos sin desbordamiento ni solapamiento de título y navegación; hover, movimiento reducido, favoritos con recarga y teclado y seis pares de contraste superiores a 4,5:1. Capturas de hero, tienda, favoritos y footer inspeccionadas.
 - Retoques posteriores: Garet cargada en descripción y footer, botones ampliados y acabado compartido comprobados; cabecera de favoritos con recuentos 0/1/2, fecha inválida, error y reintento. Recarga, teclado y retorno a tienda correctos; nueve anchos sin desbordamientos ni solapamientos de título y navegación.
+- Caché comprobada en Chromium el 18 de octubre de 2026: respuesta real de 367 ofertas persistida, recarga y veinte clics seguidos con una sola petición total; favoritos conservados. Respuestas y reloj simulados para comprobar tres horas exactas, medianoche UTC, fecha de tienda antigua, copia corrupta o futura, minuto entre consultas, vacío, fallos HTTP/red/JSON/estructura, recuperación y almacenamiento bloqueado o sin cuota. Capturas inspeccionadas y cuatro anchos de 320 a 1366 píxeles sin desbordamientos.
 
 Las pruebas de interfaz se ejecutaron en Chromium sin interfaz visible y se inspeccionaron capturas de escritorio y móvil. Son comprobaciones del agente; no sustituyen la revisión personal del alumno. No se han incorporado herramientas de pruebas como dependencias del proyecto ni se han guardado pruebas auxiliares en el repositorio.
 
@@ -128,6 +137,8 @@ Para esta segunda misión he utilizado ChatGPT a través de Codex como ayuda par
 **Trabajo propio y asistido:** he aportado el enunciado y la rúbrica, las propuestas de temática, la elección de una tienda de Fortnite organizada y la decisión de guardar favoritos diarios. También he proporcionado el título gráfico, los separadores, las fuentes y los textos, y he dirigido los cambios de diseño mediante indicaciones y capturas. Realizo mis comprobaciones manuales y ejecuto los comandos de Git y GitHub.
 
 Codex generó la plantilla y participó en la implementación de la petición a la API, la normalización y agrupación de datos, los módulos ES, el renderizado del DOM y la gestión de carga, errores y respuestas vacías. También implementó el almacenamiento de favoritos, las estrellas y la navegación entre vistas, integró los recursos gráficos y desarrolló los estilos y la adaptación a pantallas pequeñas. Además, preparó comentarios, apuntes de estudio y comprobaciones de sintaxis, compilación y navegador. La asistencia incluye generación de código y documentación, además de explicaciones.
+
+Después de aclarar la diferencia entre favoritos y caché, acepté una validez de tres horas, renovación por día UTC y actualización manual con un minuto entre consultas. Codex implementó ese bloque, su mensaje de procedencia y las comprobaciones; mi revisión personal de esta nueva funcionalidad queda pendiente.
 
 He confirmado manualmente el funcionamiento de la tienda y de los favoritos, incluido el reinicio al cambiar el día de la tienda. Las comprobaciones detalladas realizadas con herramientas se identifican por separado en este README. Las autopsias siguientes recogen mi redacción final, preparada a partir de borradores de referencia y aclaraciones de Codex.
 
@@ -148,7 +159,7 @@ El trabajo se ha dividido en bloques: plantilla con Vite, elección de API y tie
 - El alumno pidió entender el recorrido completo antes de ampliar la aplicación; se preparó una explicación de la consulta HTTP, JSON, asincronía, transformación de arrays y construcción del DOM en `docs/Estudio.md`.
 - Durante el repaso preguntó si Vite interpreta el JSON y cómo se crean las tarjetas desde JavaScript. Se aclararon las responsabilidades del navegador y se preparó `docs/UsosMapFilterReduce.md` con parámetros, retornos y usos reales de los métodos de array.
 - Se compararon favoritos diarios y persistentes entre tiendas, y el alumno eligió la opción diaria con fecha e identificadores en `localStorage`.
-- Se aclaró que persistir favoritos no implementa la caché de respuestas del bonus: la carga y la actualización siguen consultando la API.
+- Se aclaró que persistir favoritos no implementaba por sí solo la caché de respuestas del bonus; después se añadió una copia independiente que evita consultas al recargar mientras está vigente.
 
 ## Autopsia
 

@@ -63,4 +63,4 @@ Elegir los temas que el alumno pueda explicar con su experiencia. Estas pregunta
 
 Para cada tema seleccionado, explicar el problema, la decisión, una alternativa y el coste de la elección. Añadir un ejemplo del código o de lo observado al probar la web. No inventar errores que no hayan ocurrido ni atribuir al alumno implementaciones o comprobaciones realizadas por la IA.
 
-La persistencia de favoritos y la caché de respuestas son objetivos diferentes. La caché del bonus sigue sin implementarse; no presentar su funcionamiento o sus ventajas como trabajo ya realizado.
+La persistencia de favoritos y la caché de respuestas son objetivos diferentes. Al preparar estas preguntas la caché aún no estaba implementada. El alumno autorizó después ese bloque y se completó el 18 de octubre; sus autopsias finales se conservan sin modificaciones.

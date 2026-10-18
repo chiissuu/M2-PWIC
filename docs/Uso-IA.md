@@ -108,6 +108,14 @@ Este registro servirá para redactar la declaración pública del README a parti
 - **Comprobaciones:** correspondencia del texto incorporado y formato del diff; no se ejecutan nuevas pruebas funcionales porque solo se modifica documentación.
 - **Siguiente paso acordado:** commit y push ejecutados por el alumno y posterior revisión frente a la rúbrica cuando comparta el repositorio.
 
+## 2026-10-18 · Caché de respuestas
+
+- **Decisión del alumno:** tras aclarar el texto del bonus, acepta tres horas de validez, caducidad por día UTC y actualización manual con un minuto entre consultas. Solicita implementarlo.
+- **Ayuda de IA:** diseño de la separación, módulo de caché, coordinación con API y app, mensaje de procedencia y documentación educativa. Se conservan la lógica de favoritos y las autopsias finales.
+- **Comprobaciones del agente:** sintaxis, compilación, API real persistida y recarga sin consulta; reloj y respuestas simulados para caducidad, medianoche, espera, fallos de red y almacenamiento, vacío y fecha inválida; favoritos, cuatro anchos y capturas. Detalle en `Sesiones/2026-10-18-Cache-de-respuestas.md`.
+- **Alcance:** se implementa el bonus sin dependencias nuevas. El almacenamiento es local por origen; no hay consultas periódicas ni un límite global entre navegadores.
+- **Pendiente propio:** revisión del alumno y ejecución de commit y push. No se presenta la comprobación del agente como revisión personal suya.
+
 ## Registro de los siguientes bloques
 
 Anotar fecha, petición concreta, aportación del alumno, ayuda recibida, dudas reales, correcciones y comprobaciones. No atribuir al alumno revisiones que todavía no haya confirmado.

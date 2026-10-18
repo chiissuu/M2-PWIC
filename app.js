@@ -15,6 +15,7 @@ import {
   actualizarFavoritos,
   mostrarFavoritos,
   marcarVistaActiva,
+  mostrarEstadoCache,
 } from "./js/vista.js";
 
 let cargando = false;
@@ -31,7 +32,7 @@ function pintarVistaActual() {
   }
 }
 
-async function cargarTienda() {
+async function cargarTienda(forzar = false) {
   // Los dos botones comparten esta función para evitar peticiones simultáneas.
   if (cargando) {
     return;
@@ -42,21 +43,24 @@ async function cargarTienda() {
   mostrarCarga();
 
   try {
-    const datos = await obtenerTienda();
-    tiendaActual = prepararTienda(datos);
+    const respuesta = await obtenerTienda({ forzar });
+    tiendaActual = prepararTienda(respuesta.datos);
     sincronizarFavoritos(tiendaActual.fecha, tiendaActual.secciones.flatMap((seccion) => seccion.ofertas));
     pintarVistaActual();
+    mostrarEstadoCache(respuesta);
   } catch (error) {
-    console.error("Error al cargar la tienda:", error);
-    mostrarError();
+    if (error.name !== "EsperaActualizacion") {
+      console.error("Error al cargar la tienda:", error);
+    }
+    mostrarError(error.name === "EsperaActualizacion" ? error.message : undefined);
   } finally {
     cargando = false;
     habilitarActualizacion();
   }
 }
 
-document.querySelector("#actualizar").addEventListener("click", cargarTienda);
-document.querySelector("#reintentar").addEventListener("click", cargarTienda);
+document.querySelector("#actualizar").addEventListener("click", () => cargarTienda(true));
+document.querySelector("#reintentar").addEventListener("click", () => cargarTienda(true));
 
 // Un solo listener atiende las estrellas creadas en cualquiera de las dos vistas.
 document.querySelector("main").addEventListener("click", (evento) => {

@@ -2,7 +2,7 @@
 
 ## Prioridad actual
 
-El 18 de octubre el alumno entrega sus dos autopsias y solicita incorporarlas al README. Se conserva su redacción y se actualiza la declaración de IA para reflejar la asistencia con borradores y aclaraciones. El siguiente paso acordado es que el alumno haga commit y push y comparta el repositorio para contrastar la entrega con la rúbrica. La caché de respuestas sigue siendo un bonus opcional sin implementar.
+El alumno ha guardado las autopsias en `d557171` y después autoriza implementar la caché con tres horas de validez, caducidad por día UTC y un minuto entre consultas manuales. El bloque está implementado y comprobado por el agente, sin nuevas dependencias. El siguiente paso es su revisión personal, commit y push, y después compartir el repositorio para contrastarlo con la rúbrica.
 
 ## Plantilla
 
@@ -39,10 +39,11 @@ El 18 de octubre el alumno entrega sus dos autopsias y solicita incorporarlas al
 - [x] Recibir la confirmación del alumno de que se guardan los favoritos en su vista y se reinician al cambiar el día de la tienda.
 - [x] Realizar el commit de favoritos: `0eaef51` comprobado en `main` local.
 - [x] Realizar el commit del diseño anterior: `c88e8d9` comprobado en `main` local.
-- [ ] Realizar el commit y push de los retoques después de revisarlos.
-- [ ] Valorar e implementar el bonus de caché después del funcionamiento principal.
+- [x] Comprobar el commit de los retoques: `57810b7` en el historial local. No se atribuye una comprobación remota nueva.
+- [x] Elegir e implementar el bonus de caché de respuestas después del funcionamiento principal.
 - [x] Adaptar la declaración de IA a M2 siguiendo el formato de M1 y describir el propósito interno de `docs/`.
 - [x] Incorporar al README las dos autopsias entregadas por el alumno, conservando su redacción.
+- [x] Comprobar el commit de autopsias: `d557171` en el historial local.
 - [ ] Cerrar README, declaración de IA y Autopsia con el trabajo realmente realizado.
 - [ ] Revisar la entrega frente al enunciado y la rúbrica.
 
@@ -96,3 +97,18 @@ No hay bloqueos técnicos conocidos en este bloque. La siguiente referencia es l
 - [x] Comprobar sintaxis, compilación, fuentes, hover, nueve anchos, persistencia y teclado.
 - [x] Comprobar recuentos 0/1/2, fecha inválida, error, reintento y retorno a la tienda.
 - [ ] Confirmar personalmente los nuevos retoques en el navegador.
+
+## Caché de respuestas
+
+- [x] Separar caché, API y vista sin añadir dependencias.
+- [x] Guardar respuesta y hora con un máximo de tres horas y cambio de día UTC.
+- [x] Forzar consulta manual con un minuto entre intentos, persistido cuando el almacenamiento funciona.
+- [x] Mostrar procedencia, hora de consulta y avisos de espera o guardado.
+- [x] Comprobar respuesta real persistida y recarga sin otra petición; veinte clics seguidos sin consultas adicionales.
+- [x] Probar tres horas exactas, medianoche UTC, datos de otro día, fechas futuras y copias inválidas.
+- [x] Probar errores HTTP, red, JSON y estructura sin sobrescribir caché ni favoritos; reintento y recuperación.
+- [x] Probar acceso bloqueado, cuota, tienda vacía, fecha inválida y alternativa en memoria.
+- [x] Comprobar favoritos, cambio de día, otras claves intactas y cuatro anchos de pantalla.
+- [x] Actualizar README, estudio y declaración de IA conservando las autopsias finales.
+- [ ] Confirmar personalmente la caché desde Network y Local Storage.
+- [ ] Realizar commit y push de este bloque.

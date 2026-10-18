@@ -256,6 +256,12 @@ main {
   cursor: wait;
 }
 
+.estado-cache {
+  margin: -0.75rem 0 1.5rem;
+  color: var(--texto-secundario);
+  font-size: 1.05rem;
+}
+
 .aviso {
   padding: 2.5rem 1.5rem;
   border: 1px solid var(--borde);

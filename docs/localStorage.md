@@ -1,6 +1,6 @@
 # localStorage: funcionamiento y uso en la tienda
 
-Guía solicitada por el alumno para entender la persistencia de los favoritos diarios. Describe el código actual; no implementa una caché de respuestas ni favoritos conservados entre rotaciones.
+Guía solicitada por el alumno para entender la persistencia de los favoritos diarios. Desde el 18 de octubre también existe una caché independiente, explicada en [[cache]]. Los favoritos siguen limitados a la tienda actual.
 
 ## 1. Qué es y dónde guarda los datos
 
@@ -32,7 +32,7 @@ localStorage.removeItem("ejemplo"); // Borrar solamente esa clave.
 
 Estas operaciones son síncronas: no devuelven una promesa que tengamos que esperar con `await`. Conviene guardar datos pequeños y no utilizarlas para almacenar archivos grandes o escribir continuamente sin necesidad.
 
-Existe `localStorage.clear()`, pero borra todas las claves del almacenamiento de ese origen. Nuestra aplicación no lo utiliza: solo escribe su propia clave.
+Existe `localStorage.clear()`, pero borra todas las claves del almacenamiento de ese origen. Nuestra aplicación no lo utiliza: solo escribe sus claves propias de favoritos, caché y última consulta.
 
 Los fallos de acceso o de espacio pueden lanzar errores y se gestionan con `try/catch`. El límite habitual de localStorage es de 5 MiB por origen. Referencia: [cuotas de almacenamiento en MDN](https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria).
 
@@ -75,13 +75,14 @@ Los nombres, precios e imágenes se obtienen de la tienda cargada. Como los favo
 
 | Archivo | Relación con los favoritos |
 | --- | --- |
-| `js/favoritos.js` | Es el único módulo que accede directamente a localStorage. Lee, valida y guarda la selección y compara fechas. |
+| `js/favoritos.js` | Lee, valida y guarda la selección y compara fechas. No gestiona la caché de respuestas. |
 | `app.js` | Coordina la carga, llama a la sincronización, atiende clics y elige qué vista mostrar. Mantiene `tiendaActual` en memoria. |
 | `js/datos.js` | `seleccionarFavoritos` filtra las ofertas guardadas y conserva su agrupación. No lee localStorage. |
 | `js/vista.js` | Crea estrellas, actualiza su estado y el contador y muestra las tarjetas seleccionadas. No escribe localStorage. |
 | `index.html` | Contiene enlaces, contador y contenedores de las vistas y los avisos. |
 | `styles.css` | Presenta estrellas, enlaces, estados y tarjetas. No decide qué se guarda. |
-| `js/api.js` | Descarga y valida la tienda. No almacena favoritos ni mantiene una caché. |
+| `js/api.js` | Decide si reutiliza la caché o descarga y valida la tienda. No almacena favoritos. |
+| `js/cache.js` | Accede a localStorage para guardar la respuesta, comprobar su validez y conservar la hora de la última consulta. |
 
 La separación permite cambiar la presentación de una estrella sin cambiar el formato guardado o cambiar el almacenamiento sin reescribir las tarjetas.
 
@@ -132,7 +133,7 @@ La selección recuperada queda pendiente de confirmar la rotación
 
 app.js → cargarTienda()
           ↓
-obtenerTienda() → fetch de una tienda real
+obtenerTienda() → copia vigente o fetch de una tienda real
           ↓
 prepararTienda() → ofertas normalizadas y agrupadas
           ↓
@@ -202,9 +203,11 @@ crearSeccion() → crearTarjeta() → imagen, estrella y precio
 
 ## 12. Favoritos no es lo mismo que caché
 
-Favoritos recuerda decisiones del usuario. Una caché de respuestas guardaría datos de la API y los reutilizaría para evitar repetir consultas mientras fueran válidos.
+Favoritos recuerda decisiones del usuario. La caché de respuestas guarda datos de la API y los reutiliza para evitar repetir consultas mientras son válidos.
 
-Actualmente abrir o actualizar la página sigue consultando la API. El JSON con identificadores no contiene suficiente información para reconstruir la tienda sin conexión. Por eso el bonus de caché de M2 sigue pendiente, aunque ya utilizamos localStorage para los favoritos.
+El bonus se implementa por separado bajo `m2-pwic:cache-tienda`. Guarda `{ version, guardadaEn, datos }`. Al abrir o recargar se reutiliza durante menos de tres horas y dentro del mismo día UTC de consulta y tienda. La actualización manual fuerza una consulta con un minuto entre intentos; su marca se guarda en `m2-pwic:ultima-consulta`.
+
+Los identificadores de favoritos por sí solos no permiten reconstruir tarjetas. Una copia vigente de la tienda sí contiene sus datos; no incluye los archivos de imagen ni garantiza que todos los recursos estén disponibles sin conexión. Las funciones y el recorrido completo están en [[cache]].
 
 ## 13. Cómo observarlo tú en Chrome
 

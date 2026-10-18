@@ -8,7 +8,7 @@
 - Repositorio: <https://github.com/chiissuu/M2-PWIC>.
 - Carpeta: `M2-PWIC`, dentro de la carpeta global `PWIC`, junto a `aim-trainer`.
 - Proyecto: Fortnite Daily Shop!, identidad de título aportada por el alumno; inicialmente denominado Tienda de Fortnite.
-- Estado: tienda, favoritos diarios y retoques visuales implementados. El 18 de octubre el alumno entrega las dos autopsias finales y se incorporan al README. El siguiente paso acordado es su commit/push y posterior contraste del repositorio con la rúbrica. La caché del bonus sigue sin implementarse.
+- Estado: tienda, favoritos diarios, retoques visuales y autopsias incorporados. Tras aclarar el bonus, el alumno autoriza la caché de respuestas de tres horas con cambio UTC y actualización manual limitada. Implementada y comprobada por el agente; pendientes su revisión y commit/push. Último commit comprobado: `d557171`, autopsias finales.
 
 ## Objetivo y rúbrica
 
@@ -30,7 +30,8 @@ Bonus: caché en `localStorage` para evitar peticiones repetidas. Los detalles d
 - `index.html` contiene cabecera con enlaces a tienda y favoritos, controles, mensajes de estado y contenedores de las dos vistas.
 - `styles.css` organiza tarjetas y secciones, con navegación lateral en escritorio y horizontal en móvil.
 - `app.js` coordina la carga inicial, la actualización, el reintento, las estrellas y el cambio de vista mediante el hash de la URL. Conserva la tienda actual en memoria.
-- `js/api.js` consulta `https://fortnite-api.com/v2/shop?language=es`, comprueba `response.ok`, limita la espera a 15 segundos y valida la lista de ofertas.
+- `js/api.js` decide entre copia vigente y consulta a `https://fortnite-api.com/v2/shop?language=es`, comprueba `response.ok`, limita la espera a 15 segundos y valida la lista de ofertas. Devuelve datos y metadatos de procedencia.
+- `js/cache.js` guarda el JSON y su hora bajo `m2-pwic:cache-tienda`, valida la copia y exige menos de tres horas y el mismo día UTC de consulta y tienda. `m2-pwic:ultima-consulta` conserva el minuto de espera para consultas manuales, también tras recargar.
 - `js/datos.js` normaliza ofertas con `map`, descarta entradas inválidas con `filter` y agrupa por sección mediante `reduce`.
 - `js/datos.js` también obtiene una tienda filtrada por favoritos conservando sus secciones.
 - `js/favoritos.js` guarda fecha UTC e identificadores bajo `m2-pwic:favoritos-diarios`, valida los datos recuperados y reinicia la selección al confirmar otra fecha de rotación.
@@ -45,13 +46,15 @@ Las imágenes se cargan desde las direcciones recibidas en la API. Cada oferta s
 
 ## Alcance confirmado
 
-El alumno elige comenzar por la tienda actual de Fortnite organizada y después autoriza favoritos diarios: estrella por oferta y acceso a una vista de favoritos en la cabecera. Se mantiene una tarjeta por oferta completa, incluidos los lotes. No se han añadido presupuesto, compras, estadísticas de jugadores, mapas, buscadores ni caché de respuestas.
+El alumno elige comenzar por la tienda actual de Fortnite organizada y después autoriza favoritos diarios y caché de respuestas. Se mantiene una tarjeta por oferta completa, incluidos los lotes. No se han añadido presupuesto, compras, estadísticas de jugadores, mapas ni buscadores.
 
 Recorrido: abrir la página, cargar la tienda, consultar ofertas por secciones y actualizar cuando se desee. Si falla la consulta, aparece un mensaje y un botón de reintento.
 
 La selección de favoritos se conserva al recargar dentro de la misma fecha de rotación UTC y se reinicia solo cuando una respuesta válida confirma otra fecha. La aplicación no sondea automáticamente la API. Una fecha inválida no modifica lo guardado y desactiva las estrellas; un fallo de consulta no ejecuta la sincronización. Si falla el almacenamiento, la selección sigue en memoria con aviso. Si una oferta deja de aparecer en una respuesta válida de la misma rotación, se retira de la selección disponible.
 
-`#favoritos` muestra la selección y el enlace a `#contenido` vuelve a la tienda. Las tarjetas se reutilizan y los cambios de vista no hacen nuevas peticiones. Los favoritos guardan solo identificadores y fecha, por lo que necesitan cargar la tienda para confirmar la rotación y reconstruir las tarjetas; no son una caché ni una vista sin conexión.
+`#favoritos` muestra la selección y el enlace a `#contenido` vuelve a la tienda. Las tarjetas se reutilizan y los cambios de vista no hacen nuevas peticiones. Los favoritos guardan solo identificadores y fecha; la tienda para reconstruir las tarjetas procede de una copia vigente o de la API. Favoritos y caché mantienen claves distintas.
+
+La carga normal reutiliza la copia durante tres horas y dentro del día UTC actual; la actualización manual puede forzar red si ha pasado un minuto desde el último intento. No hay temporizadores de sondeo. Los intentos fallidos cuentan para la espera. Una actualización fallida conserva la copia anterior y solo la muestra si sigue vigente. El almacenamiento bloqueado o sin cuota permite seguir con datos en memoria, con aviso.
 
 ## Comprobación del primer bloque
 
@@ -73,7 +76,7 @@ Después de valorar el acceso de terceros, se priorizan recursos gratuitos sin c
 
 ## Método de trabajo
 
-El 17 de octubre el alumno confirma el guardado y el reinicio diario de favoritos. Se prepara la declaración de IA del README siguiendo M1 y se proponen temas para su Autopsia. El 18 de octubre entrega su redacción final sobre favoritos y lotes y pide incorporarla sin más cambios. La caché de respuestas del bonus es independiente del almacenamiento de favoritos y todavía no está implementada. El siguiente cierre es el commit/push del alumno; la evaluación del repositorio queda para cuando la solicite después.
+El 17 de octubre el alumno confirma el guardado y el reinicio diario de favoritos. El 18 de octubre entrega su redacción final sobre favoritos y lotes y pide incorporarla sin más cambios. Después autoriza la caché del bonus con tres horas, caducidad por día UTC y actualización manual limitada; se implementa sin modificar sus autopsias. El siguiente cierre es su revisión y commit/push; la evaluación del repositorio queda para cuando la solicite después.
 
 Desarrollar bloques pequeños, comprobarlos y explicar los conceptos desconocidos antes de cerrar cada avance. El alumno gestiona los commits y los pushes. Registrar únicamente pruebas realizadas y conservar literalmente su redacción final de la Autopsia.
 
