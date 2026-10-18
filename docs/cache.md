@@ -98,4 +98,4 @@ Los botones llaman a `cargarTienda(true)`. Si quedan segundos de espera, no se c
 5. Al pasar un minuto, pulsa actualizar y comprueba una nueva petición y una nueva hora de guardado.
 6. Marca un favorito, cambia de vista y recarga. La selección debe conservarse y las vistas no deben añadir peticiones a la API.
 
-Las tres horas y la medianoche UTC se comprobaron con el reloj simulado, sin esperar horas reales. En Chromium también se probaron las respuestas inválidas, el almacenamiento bloqueado y la cuota agotada. La revisión personal del alumno de este bloque sigue pendiente.
+Las tres horas y la medianoche UTC se comprobaron con el reloj simulado, sin esperar horas reales. En Chromium también se probaron las respuestas inválidas, el almacenamiento bloqueado y la cuota agotada. El alumno ha confirmado después su revisión de la funcionalidad y del README; esta confirmación no le atribuye las pruebas detalladas del agente.

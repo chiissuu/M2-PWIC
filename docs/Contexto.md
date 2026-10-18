@@ -8,7 +8,7 @@
 - Repositorio: <https://github.com/chiissuu/M2-PWIC>.
 - Carpeta: `M2-PWIC`, dentro de la carpeta global `PWIC`, junto a `aim-trainer`.
 - Proyecto: Fortnite Daily Shop!, identidad de título aportada por el alumno; inicialmente denominado Tienda de Fortnite.
-- Estado: tienda, favoritos diarios, retoques visuales y autopsias incorporados. Tras aclarar el bonus, el alumno autoriza la caché de respuestas de tres horas con cambio UTC y actualización manual limitada. Implementada y comprobada por el agente; pendientes su revisión y commit/push. Último commit comprobado: `d557171`, autopsias finales.
+- Estado: tienda, favoritos diarios, retoques visuales, autopsias y caché incorporados. El alumno confirma que ha revisado la funcionalidad y el README. La caché está guardada en `ecd40d9`, comprobado en local y GitHub. Se actualiza la documentación para reflejar su confirmación; falta el commit/push de este ajuste de texto.
 
 ## Objetivo y rúbrica
 
@@ -23,7 +23,7 @@ Crear una aplicación con Vite que consuma una API pública real, transforme los
 | Originalidad | Temática y presentación propias. | 10 |
 | Checks automáticos | README, declaración de IA, limpieza, commits, tecnología y estructura. | 30 |
 
-Bonus: caché en `localStorage` para evitar peticiones repetidas. Los detalles de los checks automáticos y la fecha límite todavía no se han facilitado.
+Bonus: caché en `localStorage` para evitar peticiones repetidas. El alumno confirma como checks README, declaración de IA, repo limpio, commits, tecnología y estructura, sin un reparto adicional de puntos. Indica el día 18 como fecha límite; no se ha especificado la hora.
 
 ## Base actual
 

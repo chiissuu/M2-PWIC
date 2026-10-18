@@ -116,6 +116,13 @@ Este registro servirá para redactar la declaración pública del README a parti
 - **Alcance:** se implementa el bonus sin dependencias nuevas. El almacenamiento es local por origen; no hay consultas periódicas ni un límite global entre navegadores.
 - **Pendiente propio:** revisión del alumno y ejecución de commit y push. No se presenta la comprobación del agente como revisión personal suya.
 
+## 2026-10-18 · Confirmación de revisión personal
+
+- **Confirmación del alumno:** ha revisado la caché y el README y confirma su funcionamiento. Solicita sustituir la frase que aún dejaba pendiente su revisión.
+- **Ayuda de IA:** actualización de esa frase y del seguimiento documental, sin atribuir al alumno las pruebas detalladas del agente ni modificar sus autopsias.
+- **Comprobación:** formato del diff; no se repiten pruebas funcionales porque no cambian código, dependencias ni configuración.
+- **Git:** el alumno ejecutará personalmente commit y push del ajuste.
+
 ## Registro de los siguientes bloques
 
 Anotar fecha, petición concreta, aportación del alumno, ayuda recibida, dudas reales, correcciones y comprobaciones. No atribuir al alumno revisiones que todavía no haya confirmado.

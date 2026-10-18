@@ -138,7 +138,7 @@ Para esta segunda misión he utilizado ChatGPT a través de Codex como ayuda par
 
 Codex generó la plantilla y participó en la implementación de la petición a la API, la normalización y agrupación de datos, los módulos ES, el renderizado del DOM y la gestión de carga, errores y respuestas vacías. También implementó el almacenamiento de favoritos, las estrellas y la navegación entre vistas, integró los recursos gráficos y desarrolló los estilos y la adaptación a pantallas pequeñas. Además, preparó comentarios, apuntes de estudio y comprobaciones de sintaxis, compilación y navegador. La asistencia incluye generación de código y documentación, además de explicaciones.
 
-Después de aclarar la diferencia entre favoritos y caché, acepté una validez de tres horas, renovación por día UTC y actualización manual con un minuto entre consultas. Codex implementó ese bloque, su mensaje de procedencia y las comprobaciones; mi revisión personal de esta nueva funcionalidad queda pendiente.
+Después de aclarar la diferencia entre favoritos y caché, acepté una validez de tres horas, renovación por día UTC y actualización manual con un minuto entre consultas. Codex implementó ese bloque, su mensaje de procedencia y las comprobaciones; he revisado personalmente esta funcionalidad y el README y he confirmado su funcionamiento.
 
 He confirmado manualmente el funcionamiento de la tienda y de los favoritos, incluido el reinicio al cambiar el día de la tienda. Las comprobaciones detalladas realizadas con herramientas se identifican por separado en este README. Las autopsias siguientes recogen mi redacción final, preparada a partir de borradores de referencia y aclaraciones de Codex.
 

@@ -2,7 +2,7 @@
 
 ## Prioridad actual
 
-El alumno ha guardado las autopsias en `d557171` y después autoriza implementar la caché con tres horas de validez, caducidad por día UTC y un minuto entre consultas manuales. El bloque está implementado y comprobado por el agente, sin nuevas dependencias. El siguiente paso es su revisión personal, commit y push, y después compartir el repositorio para contrastarlo con la rúbrica.
+El alumno confirma la revisión de la caché y del README. El commit `ecd40d9` está comprobado en local y GitHub, con el repositorio limpio antes de este ajuste documental. Se cierra la frase que aún presentaba su revisión como pendiente. El siguiente paso es que el alumno guarde este ajuste con commit y push y después comparta el repositorio para contrastarlo con la rúbrica.
 
 ## Plantilla
 
@@ -49,7 +49,7 @@ El alumno ha guardado las autopsias en `d557171` y después autoriza implementar
 
 ## Información pendiente
 
-- Fecha límite y detalle de los checks automáticos.
+- Fecha límite indicada: día 18, sin hora concreta. Los checks confirmados son README, declaración de IA, repo limpio, commits, tecnología y estructura; no se ha facilitado otro reparto de puntos.
 
 ## Favoritos diarios
 
@@ -110,5 +110,6 @@ No hay bloqueos técnicos conocidos en este bloque. La siguiente referencia es l
 - [x] Probar acceso bloqueado, cuota, tienda vacía, fecha inválida y alternativa en memoria.
 - [x] Comprobar favoritos, cambio de día, otras claves intactas y cuatro anchos de pantalla.
 - [x] Actualizar README, estudio y declaración de IA conservando las autopsias finales.
-- [ ] Confirmar personalmente la caché desde Network y Local Storage.
-- [ ] Realizar commit y push de este bloque.
+- [x] Recibir la confirmación del alumno de que ha revisado la caché y el README y de que funciona correctamente.
+- [x] Comprobar el commit de caché `ecd40d9` en local y GitHub.
+- [ ] Realizar commit y push del ajuste documental que cierra la confirmación.
